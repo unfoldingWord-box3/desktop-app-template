@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+# set port environment variable
+export ROCKET_PORT=19119
+
+URL="http://localhost:19119"
+if ! command "firefox --version" >/dev/null 2>&1
+then
+    firefox "$URL" >/dev/null 2>&1 &
+elif [[ -x $BROWSER ]]
+then
+    "$BROWSER" "$URL" >/dev/null 2>&1 &
+elif path=$(which xdg-open || which gnome-open)
+then
+    "$path" "$URL" >/dev/null 2>&1 &
+fi
+echo "Launch a web browser and enter http://localhost:19119"
+echo "(Best viewed with a Graphite-enabled browser such as Firefox.)"
+echo " "
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+export APP_RESOURCES_DIR="$SCRIPT_DIR/lib/"
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+$SCRIPT_DIR/bin/server.bin

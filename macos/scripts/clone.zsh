@@ -1,0 +1,42 @@
+#!/usr/bin/env zsh
+
+source ../../app_config.env
+
+count=$( wc -l < "../../app_config.env" )
+
+cd ../../../
+for ((i=1;i<=count;i++)); do
+  eval asset='$'ASSET$i
+  if [ ! -z "$asset" ]; then
+    # Remove any spaces, e.g. trailing ones
+    asset=$(sed 's/ //g' <<< $asset)
+    echo "############################### BEGIN Asset $i: $asset ###############################"
+    if [ ! -d "$asset" ]; then
+      git clone https://github.com/pankosmia/$asset.git
+    else
+      echo "Directory already exists; Not cloned."
+    fi
+    echo "################################ END Asset $i: $asset ################################"
+    echo
+  fi
+done
+for ((i=1;i<=count;i++)); do
+  eval client='$'CLIENT$i
+  if [ ! -z "$client" ]; then
+    # Remove any spaces, e.g. trailing ones
+    client=$(sed 's/ //g' <<< $client)
+    echo "############################### BEGIN Client $i: $client ###############################"
+    if [ ! -d "$client" ]; then
+      git clone https://github.com/pankosmia/$client.git
+    else
+      echo "Directory already exists; Not cloned."
+    fi
+    echo "################################ END Client $i: $client ################################"
+    echo
+  fi
+done
+
+# Use lower case app name in path
+APP_NAME=${APP_NAME:l}
+
+cd desktop-app-$APP_NAME/macos/scripts

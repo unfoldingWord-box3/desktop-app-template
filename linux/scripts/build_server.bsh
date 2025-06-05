@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+./clean.bsh
+
+if [ ! -f ../../local_server/target/release/local_server ]; then
+    echo "Building local server"
+    cd ../../local_server
+    cargo build --release
+    cd ../linux/scripts
+fi
+
+if [ ! -d ../build ]; then
+  echo "Assembling build environment"
+  node ./build.js
+fi

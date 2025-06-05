@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+echo
+
+while true; do
+
+read -p "Is the server off?[Y/N]? " yn
+
+case $yn in 
+	[yY] ) echo "Cleaning...";
+    break;;
+	[nN] ) echo;
+    echo "Turn the server off by exiting the terminal window in which it is running, then re-run this script while the server is off.";
+    echo;
+		exit;;
+	* ) echo invalid response;
+		exit 1;;
+esac
+
+done
+
+if [ -d ../build ]; then
+  echo "Removing last build environment"
+  rm -rf ../build
+fi
+
+if [ -f ../../local_server/target/release/local_server ]; then
+    echo "Cleaning local server"
+    cd ../../local_server
+    cargo clean
+    cd ../linux/scripts
+fi
+
+echo
+echo "The local server and build environment have been cleaned."
+echo

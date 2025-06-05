@@ -1,0 +1,110 @@
+# desktop-app-template
+This template is designed to be forked for Desktop App repos built on Pankosmia
+
+## Environment requirements for this repo
+
+Tested on:
+| Ubuntu 24.04 with: | Windows 11 with: | MacOS with: |
+|-------|---------|-------|
+|- npm 9.2.0<br />- node 18.19.1<br />- rustc 1.83.0 -- `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| sh` | - npm 10.7.0<br />- node 18.20.4<br />- rustc 1.83.0 -- See https://www.rust-lang.org/tools/install<br />- cmake 3.31.0 -- Version 3 is required. See https://cmake.org/download/ | - npm 10.7.0 (tested on Monterey)<br />- npm 10.8.2 (tested on Sequoia)<br />- node 18.20.4<br />- rustc 1.86.0 -- `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \| sh`<br />- OpenSSL 3.5.0 -- `brew install openssl` |
+
+## Setup
+
+1. Recommended repo name: desktop-app-[app-name] (To change this pattern, search for "desktop-app" to and scripts accordingly.)
+Recommended directory structure:
+
+<ul><pre>
+|-- repos
+    |-- pankosmia
+        |-- desktop-app-[app-name]
+</pre></ul>
+
+2. At the root of your fork of this repo, run
+
+<ul><pre>
+npm install
+</pre></ul>
+
+3. Edit app_config.env, entering the App Name, version number, theme, assets (might not change), and clients.
+4. `cd [os]/scripts
+5. Run the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
+6. Run the `app_setup` script to generate the config files to match `app_config.env`. Re-run the `app_setup` script anytime `app_config.env` is modified.
+7. Run the `build_clients` script to build all clients. (Be patient. This will take a while.)
+8. Run the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
+
+## Use
+
+ - Run the `open` script to start the server with a browser auto-opened to the right location.
+ - Run the `run` script to start the server without a browser launch.
+ - Run the `bundle_...` script to generate a release package for the OS you are using.
+
+## Maintenance:
+ - To update, change the [Latest version](https://docs.rs/pankosmia_web/latest/pankosmia_web/) of panksomia-web in `/local_server/Cargo.toml` and re-run the `build_server` script.
+
+## Additional Info TL;DR - For reference when needed!
+### Ecosystem setup and configuration
+This repo pulls together several libraries and projects into a single app. The projects are spread across several repos to allow modular reuse. Scripts follow for assisting in setup, though it can also all be setup manually. The following assume [the repos](https://github.com/pankosmia/repositories) are installed with the following directory structure.
+
+This is an example. Clients in use may vary. Configuration is handled via `app_config.env`and the `app_setup` script. If you prefer to set this up manually, then see the configuration section under Scripts, towards the bottom of this readme.
+
+```
+|-- repos
+    |-- pankosmia
+        |-- core-client-content repository
+        |-- core-client-dashboard repository
+        |-- core-client-i18n-editor repository
+        |-- core-client-remote-repos repository
+        |-- core-client-settings repository
+        |-- core-client-workspace repository
+        |-- desktop-app-[app-name]
+        |-- resource-core
+        |-- webfonts-core
+```
+
+### Installing the clients
+The local_server (pankosmia_web) serves compiled files from the `build` directory of each client, each client must be built. 
+
+This is handled by the `clone` and `build_clients` scripts, though can also all be run manually which is helpful during development.
+```
+# In each client repo, NOT this repo!
+npm install
+npm run build
+```
+Running `run`, `open`, `build_server`, or `bundle_...` all copy the latest build to the build environment.
+
+### Scripts
+
+#### Configuration
+
+Config files must match clients and assets utilized. Scripts that write them are provided, or you can adjust them manually. The configuration files are:
+
+| Linux | Windows | MacOS |
+|-------|---------|-------|
+| <pre>buildSpec.json<br />/globalBuildResources/i18nPatch.json<br />/globalBuildResources/theme.json<br />/linux/buildResources/setup/app_setup.json</pre> | <pre>buildSpec.json<br />/globalBuildResources/i18nPatch.json<br />/globalBuildResources/theme.json<br />/windows/buildResources/setup/app_setup.json</pre> | <pre>buildSpec.json<br />/globalBuildResources/i18nPatch.json<br />/globalBuildResources/theme.json<br />/macos/buildResources/setup/app_setup.json</pre> 
+
+To setup config files using one of the scripts that follow, first update `app_config.env`.
+
+##### Config scripts:
+Run from the provided location:
+| Description | Linux | Windows | MacOS |
+|-------------|-------|---------|-------|
+| Uses app_config.env to generate/rebuild/replace app_setup.json, buildSpec.json, and i18nPatch.json| `/linux/scripts/app_setup.bsh` | `/windows/scripts/app_setup.bat` | `/macos/scripts/app_setup.zsh` |
+
+##### Setup scripts:
+Run from the provided location:
+| Description | Linux | Windows | MacOS |
+|-------|-------|---------|-------|
+| Clones all repos in `/app_config.env` if a directly by that name does not already exit | /linux/scripts/clone.bsh | /windows/scripts/clone.bat | /macos/scripts/clone.zsh |
+| For each asset repo in `/app_config.env`: git checkout main, git pull<br />For each client repo in  `/app_config.env`: `git checkout main`, `git pull`, `npm install`, and `npm run build`.<br />***Dev's should build manually when testing branch(es).*** | /linux/scripts/build_clients.bsh | /windows/scripts/build_clients.bat | /macos/scripts/build_clients.zsh |
+
+##### Usage scripts:
+
+| Description | Linux | Windows | MacOS |
+|-------|-------|---------|-------|
+| removes the build directory and runs `cargo clean` | /linux/scripts/clean.bsh | /windows/scripts/clean.bat | /macos/scripts/clean.zsh |
+| runs `clean.bat`, cargo build, and `node build.js` | /linux/scripts/build_server.bsh | /windows/scripts/build_server.bat | /macos/scripts/build_server.zsh |
+| Assembles the build environment (clients) and starts the server **(*)** | /linux/scripts/run.bsh | /windows/scripts/run.bat | /macos/scripts/run.zsh |
+| Assembles the build environment (clients), starts the server, and launches a browser **(*)** | /linux/scripts/open.bsh | /windows/scripts/open.bat | /macos/scripts/open.zsh |
+| Deletes the last .zip release bundle if it it exists, runs `app_setup.bat` to ensure version consistency, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `node build.js`, then makes a zip release bundle **(*)** | /linux/scripts/bundle_tgz.bsh | /windows/scripts/bundle_zip.ps1 | /macos/scripts/bundle_zip.zsh |
+| Deletes the last .exe release bundle if it it exists, runs `app_setup.bat` to ensure version consistency, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `node build.js`, then makes an exe installer **(*)** | | /windows/scripts/bundle_exe.ps1 | |
+**(*)** ***Ensure the server (build_server.bat) is current!***

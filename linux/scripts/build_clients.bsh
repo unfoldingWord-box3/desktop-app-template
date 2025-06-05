@@ -1,0 +1,58 @@
+#!/usr/bin/env bash
+
+source ../../app_config.env
+
+count=$( wc -l < "../../app_config.env" )
+
+cd ../../../
+for ((i=1;i<=count;i++)); do
+  eval asset='$'ASSET$i
+  if [ ! -z "$asset" ]; then
+    # Remove any spaces, e.g. trailing ones
+    asset=$(sed 's/ //g' <<< $asset)
+    echo "############################### BEGIN Asset $i: $asset ###############################"
+    if [ ! -d "$asset" ]; then
+      echo
+      echo "****************************************************"
+      echo "$asset does not exist; Run .\clone.bat"
+      echo "****************************************************"
+      echo
+    else
+      cd $asset
+      git checkout main
+      git pull
+      echo "################################ END Asset $i: $asset ################################"
+      echo
+      cd ..
+    fi
+  fi
+done
+for ((i=1;i<=count;i++)); do
+  eval client='$'CLIENT$i
+  if [ ! -z "$client" ]; then
+    # Remove any spaces, e.g. trailing ones
+    client=$(sed 's/ //g' <<< $client)
+    echo "############################### BEGIN Client $i: $client ###############################"
+    if [ ! -d "$client" ]; then
+      echo
+      echo "***************************************************************************************"
+      echo "$client does not exist; Run .\clone.bat then rerun .\build_clients_main.bat"
+      echo "***************************************************************************************"
+      echo
+    else
+      cd $client
+      git checkout main
+      git pull
+      npm install
+      npm run build
+      echo "################################ END Client $i: $client ################################"
+      echo
+      cd ..  
+    fi
+  fi
+done
+
+# Use lower case app name in path
+APP_NAME=${APP_NAME,,}
+
+cd desktop-app-$APP_NAME/linux/scripts
