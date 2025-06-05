@@ -27,7 +27,7 @@ npm install
 </pre></ul>
 
 4. Edit app_config.env, entering the App Name, version number, theme, assets (might not change), and clients.
-5. `cd [os]/scripts
+5. `cd [os]/scripts`
 6. Run the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
 7. Run the `app_setup` script to generate the config files to match `app_config.env`. Re-run the `app_setup` script anytime `app_config.env` is modified.
 8. Run the `build_clients` script to build all clients. (Be patient. This will take a while.)
