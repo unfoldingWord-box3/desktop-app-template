@@ -19,24 +19,25 @@ Recommended directory structure:
         |-- desktop-app-[app-name]
 </pre></ul>
 
-2. At the root of your fork of this repo, run
+2. Replace all instances of "-template" in packages.json with "-your-app-name"
+3. At the root of your fork of this repo, run
 
 <ul><pre>
 npm install
 </pre></ul>
 
-3. Edit app_config.env, entering the App Name, version number, theme, assets (might not change), and clients.
-4. `cd [os]/scripts
-5. Run the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
-6. Run the `app_setup` script to generate the config files to match `app_config.env`. Re-run the `app_setup` script anytime `app_config.env` is modified.
-7. Run the `build_clients` script to build all clients. (Be patient. This will take a while.)
-8. Run the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
+4. Edit app_config.env, entering the App Name, version number, theme, assets (might not change), and clients.
+5. `cd [os]/scripts
+6. Run the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
+7. Run the `app_setup` script to generate the config files to match `app_config.env`. Re-run the `app_setup` script anytime `app_config.env` is modified.
+8. Run the `build_clients` script to build all clients. (Be patient. This will take a while.)
+9. Run the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
 
 ## Use
 
  - Run the `open` script to start the server with a browser auto-opened to the right location.
  - Run the `run` script to start the server without a browser launch.
- - Run the `bundle_...` script to generate a release package for the OS you are using.
+ - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run the `bundle_...` script.
 
 ## Maintenance:
  - To update, change the [Latest version](https://docs.rs/pankosmia_web/latest/pankosmia_web/) of panksomia-web in `/local_server/Cargo.toml` and re-run the `build_server` script.

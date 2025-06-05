@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/pankosmia/desktop-app-liminal.git"
+    "url": "git+https://github.com/pankosmia/desktop-app-template.git"
   },
   "author": "Mark Howe",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/pankosmia/desktop-app-liminal/issues"
+    "url": "https://github.com/pankosmia/desktop-app-template/issues"
   },
-  "homepage": "https://github.com/pankosmia/desktop-app-liminal#readme",
+  "homepage": "https://github.com/pankosmia/desktop-app-template#readme",
   "dependencies": {
     "copy-dir": "^1.3.0",
     "fs-extra": "^11.3.0",
