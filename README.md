@@ -28,19 +28,44 @@ npm install
 
 4. Edit app_config.env, entering the App Name, version number, theme, assets (might not change), and clients.
 5. `cd [os]/scripts`
-6. Run the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
-7. Run the `app_setup` script to generate the config files to match `app_config.env`. Re-run the `app_setup` script anytime `app_config.env` is modified.
-8. Run the `build_clients` script to build all clients. (Be patient. This will take a while.)
-9. Run the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
+6. Run<sup><b>(1)</b></sup> the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
+7. Run<sup><b>(1)</b></sup> the `app_setup` script to generate the config files to match `app_config.env`. Re-run<sup><b>(1)</b></sup> the `app_setup` script anytime `app_config.env` is modified.
+8. Run<sup><b>(1)</b></sup> the `build_clients` script to build all clients. Be patient. This will take a while.
+
+<ul><pre>This script is intended for setting all clients up for <b>first use</b>, or for rebuilding <b>all</b> clients to their <b>latest main</b> branch. It changes to the main<sup><b>(2)</b></sup> branch, pulls the latest, and builds (or rebuilds) every client every time it is run.<br />
+Build client manually when you want to use a branch or when you only need to rebuild one client or when you do not want all clients built from their latest main branch!
+</pre></ul>
+
+9. Run<sup><b>(1)</b></sup> the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
 
 ## Use
 
- - Run the `open` script to start the server with a browser auto-opened to the right location.
- - Run the `run` script to start the server without a browser launch.
- - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run the `bundle_...` script.
+ - Run<sup><b>(1)</b></sup> the `run` script to start the server without a browser launch.
+    - Consider also if you need to delete ~/pankosmia_working first.
+   - You'll want to restart the server if deleting ~/pankosmia_working after starting the server. To restart, exit the terminal window where the server is running the run the `run` script<sup><b>(1)</b></sup> again.
+   - Only one instance of the server can be running at a time.<sup><b>(3)</b></sup>
+ - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run<sup><b>(1)</b></sup> the `bundle_...` script.
 
 ## Maintenance:
- - To update, change the [Latest version](https://docs.rs/pankosmia_web/latest/pankosmia_web/) of panksomia-web in `/local_server/Cargo.toml` and re-run the `build_server` script.
+ - To update, change the [latest version](https://docs.rs/pankosmia_web/latest/pankosmia_web/) of panksomia-web in `/local_server/Cargo.toml` and re-run the `build_server` script.
+
+## Setup, Use, and Maintenance Footnotes
+<sup><b>(1)</b></sup> Windows developers, run <b>.bat</b> scripts from a <b>Powershell or Command terminal</b>:
+
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\desktop-app-liminal\windows\scripts>_ `.\[scriptname].bat`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use a **powershell** terminal for the **.ps1** build scripts.
+
+MacOS developers, run .bsh scripts from a **linux terminal**:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-liminal/linux/scripts>_ `./[scriptname].bsh`
+
+Linux developers, run .zsh scripts from a **MacOS terminal**:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-liminal/macos/scripts>_ `./[scriptname].zsh`
+
+<br />
+<sup><b>(2)</b></sup> The build script will fail on any clients set to a different branch with uncommitted changes or with conflicts vs, the latest main pull. Scroll back up in the terminal to find any build errors and address them.
+
+<br />
+<sup><b>(3)</b></sup> If running into an error saying that another instance is running, you can either find the other instance and stop it, or simply reboot. Another instance could be one started from a .zip, .tgz, installed version, a different desktop-app-[app-name], or a manually started panksomia-web.
 
 ## Additional Info TL;DR - For reference when needed!
 ### Ecosystem setup and configuration
@@ -71,7 +96,7 @@ This is handled by the `clone` and `build_clients` scripts, though can also all 
 npm install
 npm run build
 ```
-Running `run`, `open`, `build_server`, or `bundle_...` all copy the latest build to the build environment.
+Running `run`, `build_server`, or `bundle_...` all copy the latest build to the build environment.
 
 ### Scripts
 
@@ -105,7 +130,6 @@ Run from the provided location:
 | removes the build directory and runs `cargo clean` | /linux/scripts/clean.bsh | /windows/scripts/clean.bat | /macos/scripts/clean.zsh |
 | runs `clean.bat`, cargo build, and `node build.js` | /linux/scripts/build_server.bsh | /windows/scripts/build_server.bat | /macos/scripts/build_server.zsh |
 | Assembles the build environment (clients) and starts the server **(*)** | /linux/scripts/run.bsh | /windows/scripts/run.bat | /macos/scripts/run.zsh |
-| Assembles the build environment (clients), starts the server, and launches a browser **(*)** | /linux/scripts/open.bsh | /windows/scripts/open.bat | /macos/scripts/open.zsh |
 | Deletes the last .zip release bundle if it it exists, runs `app_setup.bat` to ensure version consistency, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `node build.js`, then makes a zip release bundle **(*)** | /linux/scripts/bundle_tgz.bsh | /windows/scripts/bundle_zip.ps1 | /macos/scripts/bundle_zip.zsh |
 | Deletes the last .exe release bundle if it it exists, runs `app_setup.bat` to ensure version consistency, then on this repo runs `git checkout main`, `git pull`, and `npm install`, runs `node build.js`, then makes an exe installer **(*)** | | /windows/scripts/bundle_exe.ps1 | |
 **(*)** ***Ensure the server (build_server.bat) is current!***
