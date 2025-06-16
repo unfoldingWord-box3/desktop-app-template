@@ -31,11 +31,8 @@ npm install
 6. Run<sup><b>(1)</b></sup> the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
 7. Run<sup><b>(1)</b></sup> the `app_setup` script to generate the config files to match `app_config.env`. Re-run<sup><b>(1)</b></sup> the `app_setup` script anytime `app_config.env` is modified.
 8. Run<sup><b>(1)</b></sup> the `build_clients` script to build all clients. Be patient. This will take a while.
-
-<ul><pre>This script is intended for setting all clients up for <b>first use</b>, or for rebuilding <b>all</b> clients to their <b>latest main</b> branch. It changes to the main<sup><b>(2)</b></sup> branch, pulls the latest, and builds (or rebuilds) every client every time it is run.<br />
-Build client manually when you want to use a branch or when you only need to rebuild one client or when you do not want all clients built from their latest main branch!
-</pre></ul>
-
+   - This script is intended for setting all clients up for <b>first use</b>, or for rebuilding <b>all</b> clients to their <b>latest main</b> branch. It changes to the main<sup><b>(2)</b></sup> branch, pulls the latest, and builds (or rebuilds) every client every time it is run.<br />
+   - Build client manually when you want to use a branch or when you only need to rebuild one client or when you do not want all clients built from their latest main branch!
 9. Run<sup><b>(1)</b></sup> the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
 
 ## Use
@@ -44,6 +41,7 @@ Build client manually when you want to use a branch or when you only need to reb
     - Consider also if you need to delete ~/pankosmia_working first.
    - You'll want to restart the server if deleting ~/pankosmia_working after starting the server. To restart, exit the terminal window where the server is running the run the `run` script<sup><b>(1)</b></sup> again.
    - Only one instance of the server can be running at a time.<sup><b>(3)</b></sup>
+ - Client development: Manually build the client(s) changed, stop the server it is is running, then start the server (`run`).  The `run` script will re-assemble the environment to include your build.
  - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run<sup><b>(1)</b></sup> the `bundle_...` script.
 
 ## Maintenance:
