@@ -50,14 +50,14 @@ npm install
 ## Setup, Use, and Maintenance Footnotes
 <sup><b>(1)</b></sup> Windows developers, run <b>.bat</b> scripts from a <b>Powershell or Command terminal</b>:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\desktop-app-liminal\windows\scripts>_ `.\[scriptname].bat`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\desktop-app-[app-name]\windows\scripts>_ `.\[scriptname].bat`<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use a **powershell** terminal for the **.ps1** build scripts.
 
 MacOS developers, run .bsh scripts from a **linux terminal**:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-liminal/linux/scripts>_ `./[scriptname].bsh`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-[app-name]/linux/scripts>_ `./[scriptname].bsh`
 
 Linux developers, run .zsh scripts from a **MacOS terminal**:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-liminal/macos/scripts>_ `./[scriptname].zsh`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-[app-name]/macos/scripts>_ `./[scriptname].zsh`
 
 <br />
 <sup><b>(2)</b></sup> The build script will fail on any clients set to a different branch with uncommitted changes or with conflicts vs, the latest main pull. Scroll back up in the terminal to find any build errors and address them.
