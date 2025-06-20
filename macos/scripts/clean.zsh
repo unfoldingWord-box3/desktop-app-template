@@ -29,6 +29,6 @@ else
   echo
   echo "Exiting..."
   echo
-  echo "If the server is on, turn it off by exiting the terminal window in which it is running, then re-run this script.";
+  echo "If the server is on, turn it off with Ctrl-C in the terminal window in which it is running, then re-run this script.";
   echo
 fi
