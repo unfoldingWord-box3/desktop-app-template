@@ -26,7 +26,7 @@ echo {> %name%
 echo   "branding": {>> %name%
 echo     "software": {>> %name%
 echo       "name": {>> %name%
-echo         "en": "%APP_NAME%">> %name%
+echo         "en": "%APP_NAME:'=%">> %name%
 echo       }>> %name%
 echo     }>> %name%
 echo   }>> %name%
@@ -45,7 +45,7 @@ echo }>> %theme%
 
 echo {> %spec%
 echo   "app": {>> %spec%
-echo     "name": "%APP_NAME%",>> %spec%
+echo     "name": "%APP_NAME:'=%",>> %spec%
 echo     "version": "%APP_VERSION%">> %spec%
 echo   },>> %spec%
 
