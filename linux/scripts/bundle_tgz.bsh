@@ -4,6 +4,29 @@
 
 # run from pankosmia\desktop-app-[APP NAME]/linux/scripts directory in powershell by:  ./bundle_tgz.bsh
 
+echo;
+
+while true; do
+
+read -p "Is the server off?[Y/N]? " yn
+
+case $yn in 
+	[yY] ) echo "Continuing...";
+    break;;
+	[nN] ) echo;
+    echo "     Exiting...";
+    echo;
+    echo "     If the server is on, turn it off by exiting the terminal window in which it is running, then re-run this script.";
+    echo;
+		exit;;
+	* ) echo;
+    echo "     Invalid response. If the server is on, turn it off by exiting the terminal window in which it is running, then re-run this script.";
+		echo;
+    exit 1;;
+esac
+
+done
+
 source ../../app_config.env
 
 if [ ! -f ../../local_server/target/release/local_server ]; then
