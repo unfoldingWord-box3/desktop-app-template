@@ -11,14 +11,16 @@ goto :choice
 :server_on
 
 echo.
-echo Turn the server off by exiting the terminal window in which it is running, then re-run this script while the server is off.
+echo      Exiting...
+echo.
+echo      If the server is on, turn it off by exiting the terminal window in which it is running, then re-run this script.
 echo.
 pause
 exit
 
 :server_off
 
-echo "Cleaning..."
+echo Cleaning...
 
 if exist ..\build (
   echo Removing last build environment
