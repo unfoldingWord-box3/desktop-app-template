@@ -17,6 +17,9 @@
     },
     {
       "path": "%%PANKOSMIADIR%%/core-client-workspace"
+    },
+    {
+      "path": "%%PANKOSMIADIR%%/xenizo-parallel-gospels"
     }
   ]
 }

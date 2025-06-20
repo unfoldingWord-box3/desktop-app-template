@@ -1,7 +1,7 @@
 {
   "app": {
     "name": "Template",
-    "version": "0.2.9"
+    "version": "0.2.10"
   },
   "bin": {
     "src": "../../local_server/target/release/local_server"
@@ -30,7 +30,8 @@
     "../../../core-client-i18n-editor",
     "../../../core-client-remote-repos",
     "../../../core-client-settings",
-    "../../../core-client-workspace"
+    "../../../core-client-workspace",
+    "../../../xenizo-parallel-gospels"
   ],
   "favIcon": "../../globalBuildResources/favicon.ico",
   "theme": "../../globalBuildResources/theme.json"
