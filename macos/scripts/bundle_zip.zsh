@@ -63,6 +63,9 @@ if read -q "choice?Is the server off?[Y/N]? "; then
   cd ../build
   # Use lower case app name in filename
   APP_NAME=${APP_NAME:l}
+  # Replace spaces with a dash (-) in filename
+  APP_NAME=${APP_NAME// /-}
+  # Make exeutable and zip
   chmod +x $APP_NAME.zsh
   zip -r ../../releases/macos/$APP_NAME-macos-$APP_VERSION.zip * &> /dev/null
   cd ../scripts
