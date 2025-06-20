@@ -1,4 +1,4 @@
-#USAGE
+#%%APP_NAME%%-linux-%%APP_VERSION%% USAGE
 
 To upgrade:
 
@@ -15,4 +15,4 @@ First use:
      This will launch http://localhost:19119 in Firefox (if available) or in your default web browser.
 2. Re-connect to http://localhost:19119 from your web browser as needed.
 
-Best viewed with a Graphite-enabled browser such as Firefox.
+Best viewed with a Graphite-enabled browser such as Firefox, Zen Browser, LibreWolf or via Electronite.

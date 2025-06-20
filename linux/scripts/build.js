@@ -1,6 +1,8 @@
 const path = require('path');
 const fse = require('fs-extra');
 const copyDir = require('copy-dir');
+require('@dotenvx/dotenvx').config({path: ['../../app_config.env'], quiet: true});
+
 // Locations
 const BUILD_DIR = path.resolve('../build');
 if (BUILD_DIR.split("/").length < 5) {
@@ -17,17 +19,19 @@ fse.mkdirSync(BUILD_DIR);
 // Load spec and extract some reusable information
 const spec = fse.readJsonSync(path.resolve(SPEC_PATH));
 const APP_NAME = spec['app']['name'].toLowerCase();
+const APP_VERSION = process.env.APP_VERSION;
 // Copy and rename launcher script
 fse.copySync(
     path.join(LINUX_BUILD_RESOURCES, "appLauncher.bsh"),
     path.join(BUILD_DIR, APP_NAME)
 );
 // Copy and customize README
-const readMe = fse.readFileSync(path.join(LINUX_BUILD_RESOURCES, "README.md"))
+const readMe = fse.readFileSync(path.join(LINUX_BUILD_RESOURCES, "README.txt"))
     .toString()
-    .replace(/%%APP_NAME%%/g, APP_NAME);
+    .replace(/%%APP_NAME%%/g, APP_NAME)
+    .replace(/%%APP_VERSION%%/g, APP_VERSION);
 fse.writeFileSync(
-    path.join(BUILD_DIR, "README.md"),
+    path.join(BUILD_DIR, "README.txt"),
     readMe
 );
 // Make bin directory
