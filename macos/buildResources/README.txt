@@ -1,15 +1,15 @@
-#%%APP_NAME%%-macos-[type]-%%APP_VERSION%% USAGE
+#%%APP_NAME%%-macos-[ intel | mx ]-%%APP_VERSION%% USAGE
 
 To upgrade:
 
 1. Backup `~/panksomia_working/repos` where "~" is the OS user home directory.
 2. Delete `~/panksomia_working/`
-3. Move %%APP_NAME%%-macos-[type]-%%APP_VERSION%%.zip to your Desktop.
-4. Double-click %%APP_NAME%%-macos-[type]-%%APP_VERSION%%.zip to expand its contents into a '%%APP_NAME%%-macos-[type]-%%APP_VERSION%%' folder.
+3. Move %%APP_NAME%%-macos-[ intel | mx ]-%%APP_VERSION%%.zip to your Desktop.
+4. Double-click %%APP_NAME%%-macos-[ intel | mx ]-%%APP_VERSION%%.zip to expand its contents into a '%%APP_NAME%%-macos-[ intel | mx ]-%%APP_VERSION%%' folder.
 5. Open a terminal -- Launchpad (Application) > Utilities > Terminal
 6. Type the following then enter:
-     cd Desktop/%%APP_NAME%%-macos-[type]-%%APP_VERSION%%
-          Use the values of [type] from the folder name expanded on your Desktop in step 4 above.
+     cd Desktop/%%APP_NAME%%-macos-[ intel | mx ]-%%APP_VERSION%%
+          Use the values of [ intel | mx ] from the folder name expanded on your Desktop in step 4 above.
 7. Type the following then enter:
      ./%%APP_NAME%%.%%APP_EXT%%
 8. This will should to a message saying "server.bin" Not Opened. If instead you get "can't open the file" or something else similar, then:
@@ -29,12 +29,12 @@ To upgrade:
 
 First time use (not an upgrade):
 
-1. Move %%APP_NAME%%-macos-[type]-%%APP_VERSION%%.zip to your Desktop.
-2. Double-click %%APP_NAME%%-macos-[type]-%%APP_VERSION%%.zip to expand its contents into a '%%APP_NAME%%-macos-[type]-%%APP_VERSION%%' folder.
+1. Move %%APP_NAME%%-macos-[ intel | mx ]-%%APP_VERSION%%.zip to your Desktop.
+2. Double-click %%APP_NAME%%-macos-[ intel | mx ]-%%APP_VERSION%%.zip to expand its contents into a '%%APP_NAME%%-macos-[ intel | mx ]-%%APP_VERSION%%' folder.
 3. Open a terminal -- Launchpad (Application) > Utilities > Terminal
 4. Type the following then enter:
-     cd Desktop/%%APP_NAME%%-macos-[type]-%%APP_VERSION%%
-          Use the values of [type] from the folder expanded on your Desktop in step 2 above.
+     cd Desktop/%%APP_NAME%%-macos-[ intel | mx ]-%%APP_VERSION%%
+          Use the values of [ intel | mx ] from the folder expanded on your Desktop in step 2 above.
 5. Type the following then enter:
      ./%%APP_NAME%%.%%APP_EXT%%
 6. This will lead to a message saying "server.bin" Not Opened
