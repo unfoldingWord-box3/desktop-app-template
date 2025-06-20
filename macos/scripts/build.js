@@ -24,7 +24,7 @@ const APP_VERSION = process.env.APP_VERSION;
 // Copy and rename launcher script
 fse.copySync(
     path.join(MACOS_BUILD_RESOURCES, "appLauncher.zsh"),
-    path.join(BUILD_DIR, APP_NAME, ".", APP_EXT)
+    path.join(BUILD_DIR, APP_NAME + "." + APP_EXT)
 );
 // Copy and customize README
 const readMe = fse.readFileSync(path.join(MACOS_BUILD_RESOURCES, "README.txt"))
