@@ -10,7 +10,7 @@ Tested on:
 
 ## Setup
 
-1. Recommended repo name: desktop-app-[app-name] (To change this pattern, search for "desktop-app" to and scripts accordingly.)
+1. Scripts will be expecting a repo name of: desktop-app-[app-name] 
 Recommended directory structure:
 
 <ul><pre>
@@ -19,14 +19,14 @@ Recommended directory structure:
         |-- desktop-app-[app-name]
 </pre></ul>
 
-2. Replace all instances of "-template" in packages.json with "-your-app-name"
+2. Replace all instances of "-template" in packages.json with "-your-app-name". And consider replacing "[app-name]" with "your-app-name" in this README, edit out the first line of 1., remove 2. and 4., renumber, and edit the # desktop-app-template intro.
 3. At the root of your fork of this repo, run
 
 <ul><pre>
 npm install
 </pre></ul>
 
-4. Edit app_config.env, entering the App Name, version number, theme, assets (might not change), and clients.
+4. Edit app_config.env, entering the App Name, version number, theme, assets (might not change), and clients.  And replace globalBuildResources/favicon.ico with a customized icon.
 5. `cd [os]/scripts`
 6. Run<sup><b>(1)</b></sup> the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
 7. Run<sup><b>(1)</b></sup> the `app_setup` script to generate the config files to match `app_config.env`. Re-run<sup><b>(1)</b></sup> the `app_setup` script anytime `app_config.env` is modified.
