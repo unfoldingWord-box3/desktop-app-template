@@ -18,7 +18,7 @@ if (fse.existsSync(BUILD_DIR)) {
 fse.mkdirSync(BUILD_DIR);
 // Load spec and extract some reusable information
 const spec = fse.readJsonSync(path.resolve(SPEC_PATH));
-const APP_NAME = spec['app']['name'].toLowerCase();
+const APP_NAME = spec['app']['name'].toLowerCase().replace(/ /g, "-");
 const APP_VERSION = process.env.APP_VERSION;
 // Copy and rename launcher script
 fse.copySync(
