@@ -10,10 +10,14 @@ case $yn in
 	[yY] ) echo "Cleaning...";
     break;;
 	[nN] ) echo;
-    echo "Turn the server off by exiting the terminal window in which it is running, then re-run this script while the server is off.";
+    echo "     Exiting...";
+    echo;
+    echo "     If the server is on, turn it off by exiting the terminal window in which it is running, then re-run this script.";
     echo;
 		exit;;
-	* ) echo invalid response;
+	* ) echo;
+    echo "     Invalid response. If the server is on, turn it off by exiting the terminal window in which it is running, then re-run this script.";
+		echo;
 		exit 1;;
 esac
 
