@@ -1,5 +1,5 @@
-# desktop-app-xenizo-parallel-gospels
-This app is built on Pankosmia.
+# desktop-app-template
+This template is designed to be forked for Desktop App repos built on Pankosmia.
 
 ## Environment requirements for this repo
 
@@ -10,27 +10,34 @@ Tested on:
 
 ## Setup
 
-1. Recommended directory structure:
+1. Scripts expect a repo name pattern of: desktop-app-[app-name]
+Recommended directory structure:
 
 <ul><pre>
 |-- repos
     |-- pankosmia
-        |-- desktop-app-xenizo-parallel-gospels
+        |-- desktop-app-[app-name]
 </pre></ul>
 
-2. At the root of your fork of this repo, run
+2. Replace all instances of "desktop-app-template" in packages.json with "your-app-name" and update the name and description.
+3. At the root of your fork of this repo, run
 
 <ul><pre>
 npm install
 </pre></ul>
 
-3. `cd [os]/scripts`
-4. Run<sup><b>(1)</b></sup> the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
-5. Run<sup><b>(1)</b></sup> the `app_setup` script to generate the config files to match `app_config.env`. Re-run<sup><b>(1)</b></sup> the `app_setup` script anytime `app_config.env` is modified.
-6. Run<sup><b>(1)</b></sup> the `build_clients` script to build all clients. Be patient. This will take a while.
+4. Edit app_config.env, entering the App Name, version number, theme, assets (might not change), and clients.
+5. `cd [os]/scripts`
+6. Run<sup><b>(1)</b></sup> the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
+7. Run<sup><b>(1)</b></sup> the `app_setup` script to generate the config files to match `app_config.env`. Re-run<sup><b>(1)</b></sup> the `app_setup` script anytime `app_config.env` is modified.
+8. Run<sup><b>(1)</b></sup> the `build_clients` script to build all clients. Be patient. This will take a while.
    - This script is intended for setting all clients up for <b>first use</b>, or for rebuilding <b>all</b> clients to their <b>latest main</b> branch. It changes to the main<sup><b>(2)</b></sup> branch, pulls the latest, and builds (or rebuilds) every client every time it is run.<br />
    - Build client manually when you want to use a branch or when you only need to rebuild one client or when you do not want all clients built from their latest main branch!
-7. Run<sup><b>(1)</b></sup> the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
+9. Run<sup><b>(1)</b></sup> the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
+10.  Plan at some point to customize this readme for your project.  At minimum:
+    - rewrite the top most "# desktop-app-template" section
+    - replace all instances of "[app-name]" with "your-app-name"
+    - remove the first line of 1., delete 2., 4., and 10., and re-number.
 
 ## Use
 
@@ -47,20 +54,20 @@ npm install
 ## Setup, Use, and Maintenance Footnotes
 <sup><b>(1)</b></sup> Windows developers, run <b>.bat</b> scripts from a <b>Powershell or Command terminal</b>:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\desktop-app-xenizo-parallel-gospels\windows\scripts>_ `.\[scriptname].bat`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\desktop-app-[app-name]\windows\scripts>_ `.\[scriptname].bat`<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use a **powershell** terminal for the **.ps1** build scripts.
 
 MacOS developers, run .bsh scripts from a **linux terminal**:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-xenizo-parallel-gospels/linux/scripts>_ `./[scriptname].bsh`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-[app-name]/linux/scripts>_ `./[scriptname].bsh`
 
 Linux developers, run .zsh scripts from a **MacOS terminal**:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-xenizo-parallel-gospels/macos/scripts>_ `./[scriptname].zsh`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-[app-name]/macos/scripts>_ `./[scriptname].zsh`
 
 <br />
 <sup><b>(2)</b></sup> The build script will fail on any clients set to a different branch with uncommitted changes or with conflicts vs, the latest main pull. Scroll back up in the terminal to find any build errors and address them.
 
 <br />
-<sup><b>(3)</b></sup> If running into an error saying that another instance is running, you can either find the other instance and stop it, or simply reboot. Another instance could be one started from a .zip, .tgz, installed version, a different desktop-app-xenizo-parallel-gospels, or a manually started panksomia-web.
+<sup><b>(3)</b></sup> If running into an error saying that another instance is running, you can either find the other instance and stop it, or simply reboot. Another instance could be one started from a .zip, .tgz, installed version, a different desktop-app-[app-name], or a manually started panksomia-web.
 
 ## Additional Info TL;DR - For reference when needed!
 ### Ecosystem setup and configuration
@@ -77,7 +84,7 @@ This is an example. Clients in use may vary. Configuration is handled via `app_c
         |-- core-client-remote-repos repository
         |-- core-client-settings repository
         |-- core-client-workspace repository
-        |-- desktop-app-xenizo-parallel-gospels
+        |-- desktop-app-[app-name]
         |-- resource-core
         |-- webfonts-core
 ```
