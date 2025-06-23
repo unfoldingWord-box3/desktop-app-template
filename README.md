@@ -12,16 +12,15 @@ Tested on:
 
 ## Setup
 
-1. Scripts expect a repo name pattern of: desktop-app-[app-name]
-Recommended directory structure:
+1. Recommended directory structure:
 
 <ul><pre>
 |-- repos
     |-- pankosmia
-        |-- desktop-app-[app-name] <b><em>(30 characters or less on windows!)</em></b>
+        |-- [your-desktop-app-repo-name] <b><em>(30 characters or less on windows!)</em></b>
 </pre></ul>
 
-2. Replace all instances of "desktop-app-template" in packages.json with "your-app-name" and update the name and description.
+2. Replace all instances of "desktop-app-template" in packages.json with "[your-desktop-app-repo-name]" and update the name and description.
 3. At the root of your fork of this repo, run
 
 <ul><pre>
@@ -38,8 +37,8 @@ npm install
 9. Run<sup><b>(1)</b></sup> the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
 10.  Plan at some point to customize this readme for your project.  At minimum:
     - rewrite the top most "# desktop-app-template" section
-    - replace all instances of "[app-name]" with "your-app-name"
-    - remove the first line of 1., delete 2., 4., and 10., and re-number.
+    - replace all instances of "[your-desktop-app-repo-name]" with your desktop app repo name"
+    - delete 2., 4., and 10., and re-number.
 
 ## Use
 
@@ -56,14 +55,14 @@ npm install
 ## Setup, Use, and Maintenance Footnotes
 <sup><b>(1)</b></sup> Windows developers, run <b>.bat</b> scripts from a <b>Powershell or Command terminal</b>:
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\desktop-app-[app-name]\windows\scripts>_ `.\[scriptname].bat`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\[your-desktop-app-repo-name]\windows\scripts>_ `.\[scriptname].bat`<br />
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use a **powershell** terminal for the **.ps1** build scripts.
 
 MacOS developers, run .bsh scripts from a **linux terminal**:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-[app-name]/linux/scripts>_ `./[scriptname].bsh`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/[your-desktop-app-repo-name]/linux/scripts>_ `./[scriptname].bsh`
 
 Linux developers, run .zsh scripts from a **MacOS terminal**:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/desktop-app-[app-name]/macos/scripts>_ `./[scriptname].zsh`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/[your-desktop-app-repo-name]/macos/scripts>_ `./[scriptname].zsh`
 
 <br />
 <sup><b>(2)</b></sup> The build script will fail on any clients set to a different branch with uncommitted changes or with conflicts vs, the latest main pull. Scroll back up in the terminal to find any build errors and address them.
@@ -86,7 +85,7 @@ This is an example. Clients in use may vary. Configuration is handled via `app_c
         |-- core-client-remote-repos repository
         |-- core-client-settings repository
         |-- core-client-workspace repository
-        |-- desktop-app-[app-name] <b><em>(30 characters or less on windows!)</em></b>
+        |-- [your-desktop-app-repo-name] <b><em>(30 characters or less on windows!)</em></b>
         |-- resource-core
         |-- webfonts-core
 </pre>
