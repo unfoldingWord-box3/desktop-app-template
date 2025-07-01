@@ -50,7 +50,7 @@ npm install
  - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run<sup><b>(1)</b></sup> the `bundle_...` script.
 
 ## Maintenance:
- - To update the server, change the [latest version](https://crates.io/search?q=pankosmia-web) of [panksomia-web]((https://docs.rs/pankosmia_web/latest/pankosmia_web/)) in `/local_server/Cargo.toml` and re-run the `build_server` script.
+ - To update the server, change the [latest version](https://crates.io/search?q=pankosmia-web) of [panksomia-web](https://docs.rs/pankosmia_web/latest/pankosmia_web/) in `/local_server/Cargo.toml` and re-run the `build_server` script.
  - To sync this repo with its upstream, run the `sync` script.
 
 ## Setup, Use, and Maintenance Footnotes
