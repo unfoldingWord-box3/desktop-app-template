@@ -35,7 +35,6 @@ if [ ! -f ../../local_server/target/release/local_server ]; then
   echo "   * IMPORTANT: Build the local server, then re-run this script! *"
   echo "   ***************************************************************"
   echo
-  pause
   exit
 fi
 
