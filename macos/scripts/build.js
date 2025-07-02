@@ -18,7 +18,8 @@ if (fse.existsSync(BUILD_DIR)) {
 fse.mkdirSync(BUILD_DIR);
 // Load spec and extract some reusable information
 const spec = fse.readJsonSync(path.resolve(SPEC_PATH));
-const APP_NAME = spec['app']['name'].toLowerCase().replace(/ /g, "-");
+const APP_NAME = spec['app']['name']
+const FILE_APP_NAME = spec['app']['name'].toLowerCase().replace(/ /g, "-");
 const APP_EXT = "zsh";
 const APP_VERSION = process.env.APP_VERSION;
 // Copy and rename launcher script
@@ -26,10 +27,19 @@ fse.copySync(
     path.join(MACOS_BUILD_RESOURCES, "appLauncher.zsh"),
     path.join(BUILD_DIR, APP_NAME + "." + APP_EXT)
 );
+// Copy and customize sh launcher for pkg
+const appLauncherSh = fse.readFileSync(path.join(MACOS_BUILD_RESOURCES, "appLauncher.sh"))
+    .toString()
+    .replace(/%%APP_NAME%%/g, APP_NAME)
+    .replace(/%%FILE_APP_NAME%%/g, FILE_APP_NAME);
+fse.writeFileSync(
+    path.join(BUILD_DIR, "appLauncher.sh"),
+    appLauncherSh
+);
 // Copy and customize README
 const readMe = fse.readFileSync(path.join(MACOS_BUILD_RESOURCES, "README.txt"))
     .toString()
-    .replace(/%%APP_NAME%%/g, APP_NAME)
+    .replace(/%%FILE_APP_NAME%%/g, FILE_APP_NAME)
     .replace(/%%APP_EXT%%/g, APP_EXT)
     .replace(/%%APP_VERSION%%/g, APP_VERSION);
 fse.writeFileSync(
