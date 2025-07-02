@@ -1,6 +1,6 @@
 #!/usr/bin/env zsh
 
-# This script uses the APP_VERSION environment variable as defined in app_config.env
+# This script uses the APP_VERSION and APP_NAME environment variables as defined in app_config.env
 
 # run from pankosmia/[this-repo's-name]/macos/scripts directory in powershell by:  ./bundle_tgz.bsh
 
@@ -15,7 +15,6 @@ if read -q "choice?Is the server off?[Y/N]? "; then
     echo "   * IMPORTANT: Build the local server, then re-run this script! *"
     echo "   ***************************************************************"
     echo
-    pause
     exit
   fi
 
@@ -65,9 +64,9 @@ if read -q "choice?Is the server off?[Y/N]? "; then
   APP_NAME=${APP_NAME:l}
   # Replace spaces with a dash (-) in filename
   APP_NAME=${APP_NAME// /-}
-  # Make exeutable and zip
+  # Make executable and zip
   chmod +x $APP_NAME.zsh
-  zip -r ../../releases/macos/$APP_NAME-macos-$APP_VERSION.zip * &> /dev/null
+  zip -r ../../releases/macos/$APP_NAME-macos-$APP_VERSION.zip * -x "appLauncher.sh" &> /dev/null
   cd ../scripts
 
 else
