@@ -47,7 +47,7 @@ mkdir -p ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS
 #shc -f ../buildResources/appLauncher.sh -o ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}
 #chmod 555 ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}
 
-cp ../buildResources/appLauncher.sh ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}.sh
+cp ../build/appLauncher.sh ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}.sh
 
 mkdir -p ../project/payload/${FILE_APP_NAME}.app/Contents/Resources
 cp ../buildResources/README.md ../project/payload/${FILE_APP_NAME}.app/Contents/Resources/README.md
