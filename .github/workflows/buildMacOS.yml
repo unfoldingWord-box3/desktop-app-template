@@ -33,7 +33,8 @@ jobs:
 
       # Grant execute permissions for the shell and bash scripts
       - name: Make scripts executable
-        run: chmod +x ./macos/scripts/app_setup.zsh
+        run: |
+          chmod +x ./macos/scripts/app_setup.zsh
           chmod +x ./macos/scripts/clone.zsh
           chmod +x ./macos/scripts/build_clients.zsh
           chmod +x ./macos/install/build_server_bundle_zip.zsh
