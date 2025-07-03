@@ -11,9 +11,22 @@ jobs:
   run-make-install:
     runs-on: macos-13  # Specify macOS version 13
     steps:
-      # ...
-      - uses: moonrepo/setup-rust@v1.86.0
- 
+
+      # Rust
+      - name: Set up Rust
+        id: set-up-rust
+        uses: moonrepo/setup-rust@v1
+
+      # Homebrew for OpenSSL for OPENSSL_STATIC=yes with cargo (rust)
+      - name: Set up Homebrew
+        id: set-up-homebrew
+        uses: Homebrew/actions/setup-homebrew@main
+
+      # OpenSSL for build environment
+      - name: Set up OpenSSL
+        id: set-up-openssl
+        run: brew install openssl
+
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
