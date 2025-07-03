@@ -21,7 +21,7 @@ if [ ! -d ../build ]; then
   echo
 
   cd ../build
-  # Use lower case app name in filename
+  # Use lower case app name in filename -- zsh: ${APP_NAME:l}  -- bsh: ${APP_NAME,,}
   APP_NAME=${APP_NAME:l}
   # Replace spaces with a dash (-) in filename
   APP_NAME=${APP_NAME// /-}

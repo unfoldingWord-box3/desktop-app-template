@@ -17,8 +17,8 @@ if [ \( -z "$APP_VERSION" \) -o \( -z "$APP_NAME" \) ]; then
     exit 1
 fi
 
-# Use lower case app name in filename
-FILE_APP_NAME=${APP_NAME:l}
+# Use lower case app name in filename -- zsh: ${APP_NAME:l}  -- bsh: ${APP_NAME,,}
+FILE_APP_NAME=${APP_NAME,,}
 # Replace spaces with a dash (-) in filename
 FILE_APP_NAME=${FILE_APP_NAME// /-}
 # Set FILE_APP_NAME environment variable
