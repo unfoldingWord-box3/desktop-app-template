@@ -28,6 +28,7 @@ export FILE_APP_NAME="$FILE_APP_NAME"
 
 arch="$1"
 
+# There shouldn't be a need to rm the file from the gh actions runner as it is new every time...
 rm -f ../../releases/macos/${FILE_APP_NAME}-installer-*.pkg
 
 cd ../build || exit 1
@@ -38,6 +39,7 @@ cd ../build || exit 1
 # Turn on command echo
 set -x
 
+# There shouldn't be a need to rm the folder from the gh actions runner as it is new every time
 rm -rf ../project
 
 mkdir -p ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS
