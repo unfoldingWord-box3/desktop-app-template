@@ -43,7 +43,7 @@ rm -rf ../project
 mkdir -p ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS
 
 # convert shell script to app
-#rm -f ../buildResources/appLauncher.sh.x.c
+#rm -f ../build/appLauncher.sh.x.c
 #shc -f ../buildResources/appLauncher.sh -o ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}
 #chmod 555 ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}
 
