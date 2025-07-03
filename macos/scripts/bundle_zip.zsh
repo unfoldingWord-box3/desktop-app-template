@@ -2,7 +2,7 @@
 
 # This script uses the APP_VERSION and APP_NAME environment variables as defined in app_config.env
 
-# run from pankosmia/[this-repo's-name]/macos/scripts directory in powershell by:  ./bundle_tgz.bsh
+# run from pankosmia/[this-repo's-name]/macos/scripts directory by:  ./bundle_tgz.zsh
 
 echo
 if read -q "choice?Is the server off?[Y/N]? "; then
@@ -20,7 +20,7 @@ if read -q "choice?Is the server off?[Y/N]? "; then
 
   echo
   echo "Running app_setup to ensure version number consistency between buildSpec.json and this build bundle:"
-  ./app_setup.bsh
+  ./app_setup.zsh
 
   echo
   echo "Version is $APP_VERSION"
@@ -65,7 +65,7 @@ if read -q "choice?Is the server off?[Y/N]? "; then
   APP_NAME=${APP_NAME// /-}
   # Make executable and zip
   chmod +x $APP_NAME.zsh
-  zip -r ../../releases/macos/$APP_NAME-macos-$APP_VERSION.zip * -x "appLauncher.sh" &> /dev/null
+  zip -r ../../releases/macos/$APP_NAME-macos-$APP_VERSION.zip * &> /dev/null
   cd ../scripts
 
 else

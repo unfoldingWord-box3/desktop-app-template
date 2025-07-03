@@ -25,7 +25,7 @@ const APP_VERSION = process.env.APP_VERSION;
 // Copy and rename launcher script
 fse.copySync(
     path.join(MACOS_BUILD_RESOURCES, "appLauncher.zsh"),
-    path.join(BUILD_DIR, APP_NAME + "." + APP_EXT)
+    path.join(BUILD_DIR, FILE_APP_NAME + "." + APP_EXT)
 );
 // Copy and customize sh launcher for pkg
 const appLauncherSh = fse.readFileSync(path.join(MACOS_BUILD_RESOURCES, "appLauncher.sh"))

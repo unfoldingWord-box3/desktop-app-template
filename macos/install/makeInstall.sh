@@ -44,15 +44,16 @@ mkdir -p ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS
 
 # convert shell script to app
 #rm -f ../build/appLauncher.sh.x.c
-#shc -f ../buildResources/appLauncher.sh -o ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}
+#shc -f ../build/appLauncher.sh -o ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}
 #chmod 555 ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}
 
+# ../build contains the processed appLauncher.sh and README.txt, which both have variables replaced by `node build.js`
 cp ../build/appLauncher.sh ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}.sh
 
 mkdir -p ../project/payload/${FILE_APP_NAME}.app/Contents/Resources
-cp ../buildResources/README.md ../project/payload/${FILE_APP_NAME}.app/Contents/Resources/README.md
+cp ../build/README.txt ../project/payload/${FILE_APP_NAME}.app/Contents/Resources/README.txt
 
-# add APP_VERSION to Info.plist
+# add APP_VERSION and FILE_APP_NAME to Info.plist. It is correctly in ../buildResources as it is not processed by `node build.js`.
 cp ../buildResources/Info.plist ../project/payload/${FILE_APP_NAME}.app/Contents/
 PLIST_FILE="../project/payload/${FILE_APP_NAME}.app/Contents/Info.plist"
 
@@ -62,11 +63,13 @@ if [ ! -f "$PLIST_FILE" ]; then
     exit 1
 fi
 
-# Replace all occurrences of ${APP_VERSION} with the value of the APP_VERSION variable
+# Replace all occurrences of ${APP_VERSION} and ${FILE_APP_NAME} with the value of their variables
 sed -i.bak "s/\${APP_VERSION}/$APP_VERSION/g" "$PLIST_FILE"
+sed -i.bak "s/\${APP_VERSION}/$FILE_APP_NAME/g" "$FILE_APP_NAME"
 
 # Print success message
 echo "Replaced \${APP_VERSION} with \"$APP_VERSION\" in $PLIST_FILE."
+echo "Replaced \${FILE_APP_NAME} with \"$FILE_APP_NAME\" in $PLIST_FILE."
 #echo "Backup of original file saved as $PLIST_FILE.bak"
 #remove backup
 rm "$PLIST_FILE.bak"
