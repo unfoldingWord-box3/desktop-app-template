@@ -16,27 +16,27 @@ jobs:
 
       # Grant execute permissions for the shell and bash scripts
       - name: Make scripts executable
-        run: chmod +x ./macos/scripts/app_setup.bsh
-          chmod +x ./macos/scripts/clone.bsh
-          chmod +x ./macos/scripts/build_clients.bsh
-          chmod +x ./macos/install/build_server_wo_clean.bsh
+        run: chmod +x ./macos/scripts/app_setup.zsh
+          chmod +x ./macos/scripts/clone.zsh
+          chmod +x ./macos/scripts/build_clients.zsh
+          chmod +x ./macos/install/build_server_wo_clean.zsh
           chmod +x ./macos/install/makeAllInstalls.sh
 
-      - name: Run app_setup.bsh
+      - name: Run app_setup.zsh
         working-directory: ./macos/scripts
-        run: ./app_setup.bsh
+        run: ./app_setup.zsh
 
-      - name: Run clone.bsh
+      - name: Run clone.zsh
         working-directory: ./macos/scripts
-        run: ./clone.bsh
+        run: ./clone.zsh
 
-      - name: Run build_clients.bsh
+      - name: Run build_clients.zsh
         working-directory: ./macos/scripts
-        run: ./build_clients.bsh
+        run: ./build_clients.zsh
 
-      - name: Run build_server_wo_clean.bsh
+      - name: Run build_server_bundle_zip.zsh
         working-directory: ./macos/install
-        run: ./build_server_wo_clean.bsh
+        run: ./build_server_bundle_zip.zsh
 
       - name: Run makeAllInstalls.sh
         working-directory: ./macos/install
