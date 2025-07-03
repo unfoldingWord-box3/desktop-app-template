@@ -17,10 +17,10 @@ jobs:
       # Grant execute permissions for the shell and bash scripts
       - name: Make scripts executable
         run: chmod +x ./macos/scripts/app_setup.bsh
-        run: chmod +x ./macos/scripts/clone.bsh
-        run: chmod +x ./macos/scripts/build_clients.bsh
-        run: chmod +x ./macos/install/build_server_wo_clean.bsh
-        run: chmod +x ./macos/install/makeAllInstalls.sh
+          chmod +x ./macos/scripts/clone.bsh
+          chmod +x ./macos/scripts/build_clients.bsh
+          chmod +x ./macos/install/build_server_wo_clean.bsh
+          chmod +x ./macos/install/makeAllInstalls.sh
 
       - name: Run app_setup.bsh
         working-directory: ./macos/scripts
