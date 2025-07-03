@@ -20,7 +20,7 @@ fi
 # Use lower case app name in filename
 FILE_APP_NAME=${APP_NAME:l}
 # Replace spaces with a dash (-) in filename
-FILE_APP_NAME=${APP_NAME// /-}
+FILE_APP_NAME=${FILE_APP_NAME// /-}
 # Set FILE_APP_NAME environment variable
 export FILE_APP_NAME="$FILE_APP_NAME"
 
