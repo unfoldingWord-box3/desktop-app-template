@@ -36,7 +36,7 @@ jobs:
         run: chmod +x ./macos/scripts/app_setup.zsh
           chmod +x ./macos/scripts/clone.zsh
           chmod +x ./macos/scripts/build_clients.zsh
-          chmod +x ./macos/install/build_server_wo_clean.zsh
+          chmod +x ./macos/install/build_server_bundle_zip.zsh
           chmod +x ./macos/install/makeAllInstalls.sh
 
       - name: Run app_setup.zsh
