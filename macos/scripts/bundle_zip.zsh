@@ -48,7 +48,6 @@ if read -q "choice?Is the server off?[Y/N]? "; then
 
   echo "Assembling build environment"
   node build.js
-  cd ../build
   echo
   echo "   **********************************"
   echo "   *                                *"
