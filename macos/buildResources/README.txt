@@ -1,14 +1,14 @@
-#%%FILE_APP_NAME%%%%-macos-[ intel | mx ]-%%APP_VERSION%% USAGE
+#%%FILE_APP_NAME%%%%-macos-%%APP_VERSION%% USAGE
 
 To upgrade:
 
 1. Backup `~/panksomia_working/repos` where "~" is the OS user home directory.
 2. Delete `~/panksomia_working/`
-3. Move %%FILE_APP_NAME%%%%-macos-[ intel | mx ]-%%APP_VERSION%%.zip to your Desktop.
-4. Double-click %%FILE_APP_NAME%%%%-macos-[ intel | mx ]-%%APP_VERSION%%.zip to expand its contents into a '%%FILE_APP_NAME%%%%-macos-[ intel | mx ]-%%APP_VERSION%%' folder.
+3. Move %%FILE_APP_NAME%%%%-macos-%%APP_VERSION%%.zip to your Desktop.
+4. Double-click %%FILE_APP_NAME%%%%-macos-%%APP_VERSION%%.zip to expand its contents into a '%%FILE_APP_NAME%%%%-macos-%%APP_VERSION%%' folder.
 5. Open a terminal -- Launchpad (Application) > Utilities > Terminal
 6. Type the following then enter:
-     cd Desktop/%%FILE_APP_NAME%%%%-macos-[ intel | mx ]-%%APP_VERSION%%
+     cd Desktop/%%FILE_APP_NAME%%%%-macos-%%APP_VERSION%%
           Use the values of [ intel | mx ] from the folder name expanded on your Desktop in step 4 above.
 7. Type the following then enter:
      ./%%FILE_APP_NAME%%%%.%%APP_EXT%%
@@ -29,11 +29,11 @@ To upgrade:
 
 First time use (not an upgrade):
 
-1. Move %%FILE_APP_NAME%%%%-macos-[ intel | mx ]-%%APP_VERSION%%.zip to your Desktop.
-2. Double-click %%FILE_APP_NAME%%%%-macos-[ intel | mx ]-%%APP_VERSION%%.zip to expand its contents into a '%%FILE_APP_NAME%%%%-macos-[ intel | mx ]-%%APP_VERSION%%' folder.
+1. Move %%FILE_APP_NAME%%%%-macos-%%APP_VERSION%%.zip to your Desktop.
+2. Double-click %%FILE_APP_NAME%%%%-macos-%%APP_VERSION%%.zip to expand its contents into a '%%FILE_APP_NAME%%%%-macos-%%APP_VERSION%%' folder.
 3. Open a terminal -- Launchpad (Application) > Utilities > Terminal
 4. Type the following then enter:
-     cd Desktop/%%FILE_APP_NAME%%%%-macos-[ intel | mx ]-%%APP_VERSION%%
+     cd Desktop/%%FILE_APP_NAME%%%%-macos-%%APP_VERSION%%
           Use the values of [ intel | mx ] from the folder expanded on your Desktop in step 2 above.
 5. Type the following then enter:
      ./%%FILE_APP_NAME%%%%.%%APP_EXT%%
