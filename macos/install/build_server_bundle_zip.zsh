@@ -20,7 +20,7 @@ if [ ! -f ../../local_server/target/release/local_server ]; then
     cd ../macos/scripts
 fi
 
-# This should be unneccary in gh actions...
+# This should be unnecessary in gh actions...
 if [ -f ../build ]; then
   echo "Removing last build environment"
   rm -rf ../build
