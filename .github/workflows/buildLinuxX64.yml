@@ -1,0 +1,65 @@
+name: Build for Ubuntu 22.04
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["**"]     # Run on push to any branch
+  pull_request:
+    branches: ["**"]     # Run on PR to any branch
+
+jobs:
+  run-make-install:
+    runs-on: runs-on: ubuntu-22.04  # Specify Ubuntu version 22.04
+    steps:
+
+      # Rust
+      - name: Set up Rust
+        id: set-up-rust
+        uses: moonrepo/setup-rust@v1
+
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Grant execute permissions for the shell and bash scripts
+      - name: Make scripts executable
+        run: |
+          chmod +x ./linux/install/install_this_repo.zsh
+          chmod +x ./linux/scripts/app_setup.bsh
+          chmod +x ./linux/scripts/clone.bsh
+          chmod +x ./linux/scripts/build_clients.bsh
+          chmod +x ./linux/install/build_server_bundle_tgz.bsh
+
+      - name: Run install_this_repo.zsh
+        working-directory: ./linux/scripts
+        run: ./install_this_repo.zsh
+
+      - name: Run app_setup.bsh
+        working-directory: ./linux/scripts
+        run: ./app_setup.bsh
+
+      - name: Run clone.bsh
+        working-directory: ./linux/scripts
+        run: ./clone.bsh
+
+      - name: Run build_clients.bsh
+        working-directory: ./linux/scripts
+        run: ./build_clients.bsh
+
+      - name: Run build_server_bundle_tgz.bsh
+        working-directory: ./linux/install
+        run: ./build_server_bundle_tgz.bsh
+
+      - name: get tgz for terminal names
+        run: |
+          echo "tgz for terminal name:"
+          ls -als ./releases/linux/*.tgz
+          cd ./releases/linux
+          echo "/TGZ_NAME=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+          cd ../..
+
+      - name: Upload tgz for terminal artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.TGZ_NAME }}
+          path: ./releases/linux/${{ env.TGZ_NAME }}

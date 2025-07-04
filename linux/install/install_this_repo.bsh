@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+cd ../../
+echo "npm install"
+npm install
+cd linux/install
+
