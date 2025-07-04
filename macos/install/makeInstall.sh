@@ -67,7 +67,7 @@ fi
 
 # Replace all occurrences of ${APP_VERSION} and ${FILE_APP_NAME} with the value of their variables
 sed -i.bak "s/\${APP_VERSION}/$APP_VERSION/g" "$PLIST_FILE"
-sed -i.bak "s/\${APP_VERSION}/$FILE_APP_NAME/g" "$FILE_APP_NAME"
+sed -i.bak "s/\${FILE_APP_NAME}/$FILE_APP_NAME/g" "$PLIST_FILE"
 
 # Print success message
 echo "Replaced \${APP_VERSION} with \"$APP_VERSION\" in $PLIST_FILE."
@@ -82,7 +82,7 @@ chmod 755 ../project/payload/${FILE_APP_NAME}.app/Contents/bin/server.bin
 cp -R ./lib ../project/payload/${FILE_APP_NAME}.app/Contents/
 
 mkdir -p ../project/scripts
-cp ../install/post_install_script.sh ../project/scripts/postinstall
+cp ../build/post_install_script.sh ../project/scripts/postinstall
 chmod +x ../project/scripts/postinstall
 
 # maintain a one-off identifier for simpler upgrades of early test releases
