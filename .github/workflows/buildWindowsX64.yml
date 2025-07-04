@@ -1,0 +1,93 @@
+name: Run makeInstall.bat on Windows 2025
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["**"]     # Run on push to any branch
+  pull_request:
+    branches: ["**"]     # Run on PR to any branch
+
+jobs:
+  run-make-install:
+    runs-on: windows-2025  # Specify windows version 2025
+    steps:
+
+      # Build the Inno Setup Installer
+      - uses: actions/checkout@v4
+      - name: Compile .ISS to .EXE Installer
+        uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
+        with:
+          path: src/setup.iss
+          options: /O+
+
+      # Rust
+      - name: Set up Rust
+        id: set-up-rust
+        uses: moonrepo/setup-rust@v1
+
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Install the repository
+      - name: Run install_this_repo.bat
+        working-directory: ./windows/install
+        run: ./install_this_repo.bat
+
+      # Setup
+      - name: Run app_setup.bat
+        working-directory: ./windows/scripts
+        run: ./app_setup.bat
+
+      # Clone resources and clients
+      - name: Run clone.bat
+        working-directory: ./windows/scripts
+        run: ./clone.bat
+
+      # Install and build clients
+      - name: Run build_clients.bat
+        working-directory: ./windows/scripts
+        run: ./build_clients.bat
+
+      # Build without clean
+      - name: Run build_server_wo_clean.bat
+        working-directory: ./windows/install
+        run: ./build_server_wo_clean.bat
+
+      # Bundle zip
+      - name: Run bundle_zip.ps1
+        working-directory: ./windows/install
+        run: ./bundle_zip.ps1
+
+      # Build exe
+      - name: Run bundle_exe.ps1
+        working-directory: ./windows/install
+        run: ./bundle_exe.ps1
+
+      # Get names for artifacts
+      - name: get names for artifacts
+        run: |
+          echo "Zip for terminal name:"
+          ls -als ./releases/windows/*.zip
+          cd ./releases/windows
+          echo "ZIP_NAME=$(ls *.zip | head -n 1)" >> $GITHUB_ENV
+          cd ../..
+
+          echo "Exe for terminal name:"
+          ls -als ./releases/windows/*.exe
+          cd ./releases/windows
+          echo "EXE_NAME=$(ls *.exe | head -n 1)" >> $GITHUB_ENV
+          cd ../..
+
+      # Upload artifacts
+      - name: Upload zip for terminal artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ZIP_NAME }}
+          path: ./releases/windows/${{ env.ZIP_NAME }}
+
+      - name: Upload exe
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.EXE_NAME }}
+          path: ./releases/windows/${{ env.EXE_NAME }}
