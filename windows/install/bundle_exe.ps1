@@ -6,7 +6,7 @@
 # Assumes app_setup.bat and install_this_repo.bat have already run; They have in buildWindowsX64.yml
 # It is run from pankosmia\[this-repo's-name]\windows\scripts directory in powershell by:  .\bundle_zip.ps1
 
-# This script (the .\makeInstall.bat part) uses the APP_VERSION environment variable as defined in app_config.env
+# This script (the .\makeInstallGha.bat part) uses the APP_VERSION environment variable as defined in app_config.env
 
 get-content ..\..\app_config.env | foreach {
   $name, $value = $_.split('=')
@@ -39,4 +39,4 @@ If (Test-Path releases\windows\*.exe) {
 # Assumes build_server_wo_clean.bat has just been run.
 cd windows\install
 echo "Making .exe installer..."
-.\makeInstall.bat
+.\makeInstallGha.bat
