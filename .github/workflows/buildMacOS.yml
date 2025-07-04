@@ -56,6 +56,20 @@ jobs:
         working-directory: ./macos/install
         run: ./build_server_bundle_zip.zsh
 
+      - name: get zip for terminal names
+        run: |
+          echo "Zip for terminal name:"
+          ls -als ./releases/macos/*.zip
+          cd ./releases/macos
+          echo "/ZIP_NAME=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+          cd ../..
+
+      - name: Upload zip for terminal artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.ZIP_NAME }}
+          path: ./releases/macos/${{ env.ZIP_NAME }}
+
       - name: Run makeAllInstalls.sh
         working-directory: ./macos/install
         run: ./makeAllInstalls.sh
