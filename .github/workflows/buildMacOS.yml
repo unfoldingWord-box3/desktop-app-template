@@ -61,7 +61,7 @@ jobs:
           echo "Zip for terminal name:"
           ls -als ./releases/macos/*.zip
           cd ./releases/macos
-          echo "/ZIP_NAME=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+          echo "ZIP_NAME=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
           cd ../..
 
       - name: Upload zip for terminal artifacts
