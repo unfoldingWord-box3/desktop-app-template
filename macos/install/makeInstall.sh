@@ -86,7 +86,7 @@ cp ../install/post_install_script.sh ../project/scripts/postinstall
 chmod +x ../project/scripts/postinstall
 
 # maintain a one-off identifier for simpler upgrades of early test releases
-if [ "$FILE_APP_NAME" == "liminal" ] then;
+if [ "$FILE_APP_NAME" == "liminal" ]; then
   IDENTIFIER="com.yourdomain.liminal"
 else
   IDENTIFIER="pankosmia.${FILE_APP_NAME}"
@@ -100,7 +100,7 @@ pkgbuild \
   --identifier ${IDENTIFIER} \
   --version "$APP_VERSION" \
   --install-location /Applications \
-  ./build/${FILE_APP_NAME}-installer-${arch}_${APP_VERSION}.pkg
+  ./build/${FILE_APP_NAME}-installer-${arch}-${APP_VERSION}.pkg
 
 # copy to releases folder
-cp ./build/${FILE_APP_NAME}-installer-${arch}_${APP_VERSION}.pkg ../releases/macos/
+cp ./build/${FILE_APP_NAME}-installer-${arch}-${APP_VERSION}.pkg ../releases/macos/
