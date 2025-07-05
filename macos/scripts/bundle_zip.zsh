@@ -65,7 +65,7 @@ if read -q "choice?Is the server off?[Y/N]? "; then
   APP_NAME=${APP_NAME// /-}
   # Make executable and zip
   chmod +x $APP_NAME.zsh
-  zip -r ../../releases/macos/$APP_NAME-macos-$APP_VERSION.zip * -x post_install_script.sh @ &> /dev/null
+  zip -r ../../releases/macos/$APP_NAME-macos-$APP_VERSION.zip * -x post_install_script.sh appLauncher.sh
   cd ../scripts
 
 else
