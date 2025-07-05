@@ -71,20 +71,18 @@ jobs:
         run: .\bundle_exe.ps1
 
       # Get repo name
-      - name: get repo name
+      - name: show workspace and repo name
         run: |
-          echo "REPO_NAME=${{ github.event.repository.name }}" >> $env:GITHUB_ENV
           echo "github.event.repository.name: ${{ github.event.repository.name }}"
           echo "github.workspace: ${{ github.workspace }}"
-          echo "GITHUB_WORKSPACE: $GITHUB_WORKSPACE"
 
       # Build the Inno Setup Installer
       - uses: actions/checkout@v4
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: D:\${{ env.REPO_NAME }}\${{ env.REPO_NAME }}\windows\install\makeInstall.iss
-          options: /O+ /O"D:\${{ env.REPO_NAME }}\${{ env.REPO_NAME }}\releases\windows"
+          path: ${{ github.workspace }}\windows\install\makeInstall.iss
+          options: /O+ /O"${{ github.workspace }}\releases\windows"
 
       # Get names for exe artifact
       - name: get names for exe artifact
