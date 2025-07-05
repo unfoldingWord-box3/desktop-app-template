@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# set port environment variable
+export ROCKET_PORT=19119
+
 echo "========================"
 echo "%%APP_NAME%% starting up:"
 echo "Current directory:"
