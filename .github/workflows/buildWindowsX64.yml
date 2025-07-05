@@ -83,7 +83,7 @@ jobs:
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: D:\${{ env.REPO_NAME }}\${{ env.REPO_NAME }}\macos\install\makeInstall.iss
+          path: D:\${{ env.REPO_NAME }}\${{ env.REPO_NAME }}\windows\install\makeInstall.iss
           options: /O+ /O"D:\${{ env.REPO_NAME }}\${{ env.REPO_NAME }}\releases\windows"
 
       # Get names for exe artifact
