@@ -30,9 +30,9 @@ jobs:
           chmod +x ./linux/scripts/build_clients.bsh
           chmod +x ./linux/install/build_server_bundle_tgz.bsh
 
-      - name: Run install_this_repo.zsh
+      - name: Run install_this_repo.bsh
         working-directory: ./linux/scripts
-        run: ./install_this_repo.zsh
+        run: ./install_this_repo.bsh
 
       - name: Run app_setup.bsh
         working-directory: ./linux/scripts
