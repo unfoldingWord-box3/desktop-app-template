@@ -31,7 +31,7 @@ jobs:
           chmod +x ./linux/install/build_server_bundle_tgz.bsh
 
       - name: Run install_this_repo.bsh
-        working-directory: ./linux/scripts
+        working-directory: ./linux/install
         run: ./install_this_repo.bsh
 
       - name: Run app_setup.bsh
