@@ -1,4 +1,4 @@
-name: Build for Ubuntu 22.04
+name: Linux x64 Build
 
 on:
   workflow_dispatch:
