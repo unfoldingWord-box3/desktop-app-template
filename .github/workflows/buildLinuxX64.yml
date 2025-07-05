@@ -24,7 +24,7 @@ jobs:
       # Grant execute permissions for the shell and bash scripts
       - name: Make scripts executable
         run: |
-          chmod +x ./linux/install/install_this_repo.zsh
+          chmod +x ./linux/install/install_this_repo.bsh
           chmod +x ./linux/scripts/app_setup.bsh
           chmod +x ./linux/scripts/clone.bsh
           chmod +x ./linux/scripts/build_clients.bsh
