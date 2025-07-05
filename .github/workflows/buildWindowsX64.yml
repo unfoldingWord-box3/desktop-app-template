@@ -75,11 +75,8 @@ jobs:
         run: |
           echo "github.event.repository.name: ${{ github.event.repository.name }}"
           echo "github.workspace: ${{ github.workspace }}"
-          echo "PSScriptRoot: $PSScriptRoot"
-          echo "Get-Location: $(Get-Location)"
 
       # Build the Inno Setup Installer
-      - uses: actions/checkout@v4
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
