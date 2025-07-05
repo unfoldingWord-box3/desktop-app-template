@@ -81,7 +81,7 @@ jobs:
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
           path: windows\install\makeInstall.iss
-          options: /O"releases\windows"
+          options: /O"${{ github.workspace }}\releases\windows"
 
       # Get names for exe artifact
       - name: get names for exe artifact
