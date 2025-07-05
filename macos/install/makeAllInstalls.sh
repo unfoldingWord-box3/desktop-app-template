@@ -21,7 +21,7 @@ for ARCH in "arm64" "intel64"; do
     echo "Building for architecture: $ARCH"
 
     # unzip install files and create mac install package
-    ./makeInstallFromZip.sh  ../../releases/macos/${FILE_APP_NAME}*.zip ../release $ARCH
+    ./makeInstallFromBuild.sh  ../../releases/macos/${FILE_APP_NAME}*.zip ../release $ARCH
 
     if [ $? -ne 0 ]; then
         echo "Error: Build failed for architecture $ARCH"

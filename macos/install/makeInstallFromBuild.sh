@@ -37,23 +37,6 @@ arch="$3"
 
 echo "Processing '$filename'"
 
-# Create temporary directory
-TEMP_DIR=$(mktemp -d)
-echo "Created temporary directory: $TEMP_DIR"
-
-# Unzip the file
-if ! unzip "$filename" -d "$TEMP_DIR"; then
-  echo "Error: Failed to unzip '$filename'"
-  rm -rf "$TEMP_DIR"
-  exit 1
-fi
-
-echo "Successfully unzipped to: $TEMP_DIR"
-
-rm -rf ../build
-mkdir -p ../build
-cp -R "$TEMP_DIR"/* ../build/
-
 ./makeInstall.sh $arch
 
 rm -rf "$destination"
