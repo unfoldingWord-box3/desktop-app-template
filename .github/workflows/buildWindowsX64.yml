@@ -55,7 +55,7 @@ jobs:
       - name: get names for zip artifact
         run: |
           echo "Zip for terminal name:"
-          Get-ChildItem -Path ".\releases\windows\*.zip" -Name >> $env:GITHUB_ENV
+          echo (Get-ChildItem -Path ".\releases\windows\*.zip" -Name) >> $env:GITHUB_ENV
 
       # Upload zip for terminal artifact
       - name: Upload zip for terminal artifact
@@ -81,7 +81,7 @@ jobs:
       - name: get names for exe artifact
         run: |
           echo "Exe for terminal name:"
-          Get-ChildItem -Path ".\releases\windows\*.exe" -Name >> $env:GITHUB_ENV
+          echo (Get-ChildItem -Path ".\releases\windows\*.exe" -Name) >> $env:GITHUB_ENV
 
       # Upload exe artifact
       - name: Upload exe artifact
