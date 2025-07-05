@@ -9,7 +9,7 @@ on:
 
 jobs:
   run-make-install:
-    runs-on: runs-on: ubuntu-22.04  # Specify Ubuntu version 22.04
+    runs-on: ubuntu-22.04  # Specify Ubuntu version 22.04
     steps:
 
       # Rust
