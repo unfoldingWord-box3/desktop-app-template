@@ -55,7 +55,7 @@ jobs:
           echo "tgz for terminal name:"
           ls -als ./releases/linux/*.tgz
           cd ./releases/linux
-          echo "/TGZ_NAME=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+          echo "TGZ_NAME=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
           cd ../..
 
       - name: Upload tgz for terminal artifacts
