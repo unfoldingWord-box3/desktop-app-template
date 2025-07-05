@@ -1,8 +1,5 @@
 #!/bin/sh
 
-# set port environment variable
-export ROCKET_PORT=19119
-
 echo "========================"
 echo "%%APP_NAME%% starting up:"
 echo "Current directory:"
@@ -58,5 +55,6 @@ echo "Launch a web browser and enter http://localhost:19119"
 echo "(Best viewed with a Graphite-enabled browser such as Firefox.)"
 echo " "
 cd $BASE
+export ROCKET_PORT=19119
 export APP_RESOURCES_DIR=./lib/
 ./bin/server.bin
