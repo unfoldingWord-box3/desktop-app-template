@@ -84,7 +84,12 @@ jobs:
           dir "${{ github.workspace }}\"
           dir "${{ github.workspace }}\windows\build"
           dir "${{ github.workspace }}\windows\buildResources"
+          echo ".\windows\install\makeInstall.iss"
           type .\windows\install\makeInstall.iss
+          echo ".\windows\build\pankosmia-desktop-app-template.bat"
+          type .\windows\build\pankosmia-desktop-app-template.bat
+          echo ".\windows\buildResources\appLauncher.bat"
+          type .\windows\buildResources\appLauncher.bat
 
       # Build the Inno Setup Installer
       - name: Compile .ISS to .EXE Installer
