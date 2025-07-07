@@ -76,11 +76,16 @@ jobs:
           echo "github.event.repository.name: ${{ github.event.repository.name }}"
           echo "github.workspace: ${{ github.workspace }}"
 
+      - name: show file contents
+        run: |
+          dir "${{ github.workspace }}\windows\install\"
+          dir "${{ github.workspace }}\releases\windows"
+
       # Build the Inno Setup Installer
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: windows\install\makeInstall.iss
+          path: ${{ github.workspace }}\windows\install\makeInstall.iss
           options: /O"${{ github.workspace }}\releases\windows"
 
       # Get names for exe artifact
