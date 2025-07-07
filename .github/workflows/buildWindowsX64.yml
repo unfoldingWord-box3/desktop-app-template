@@ -12,6 +12,12 @@ jobs:
     runs-on: windows-2025  # Specify windows version 2025
     steps:
 
+      # Install Inno Setup
+      - name: Install Inno Setup
+        run: |
+          Invoke-WebRequest -Uri "https://www.jrsoftware.org/download.php/is-unicode.exe" -OutFile "$env:TEMP\inno-setup.exe"
+          Start-Process -FilePath "$env:TEMP\inno-setup.exe" -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/SP-" -Wait
+
       # Rust
       - name: Set up Rust
         id: set-up-rust
@@ -93,10 +99,16 @@ jobs:
 
       # Build the Inno Setup Installer
       - name: Compile .ISS to .EXE Installer
-        uses: Minionguyjpro/Inno-Setup-Action@v1.2.6
-        with:
-          path: ./windows/install/makeInstall.iss
-          options: /O+
+        working-directory: .\windows\install
+        run: |
+          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" makeInstall.iss /O".\releases\windows"
+          
+#      # Build the Inno Setup Installer
+#      - name: Compile .ISS to .EXE Installer
+#        uses: Minionguyjpro/Inno-Setup-Action@v1.2.6
+#        with:
+#          path: ./windows/install/makeInstall.iss
+#          options: /O+
 
       # Get names for exe artifact
       - name: get names for exe artifact
