@@ -8,9 +8,9 @@
    SolidCompression=yes
 
    [Files]
-   Source: "..\build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
-   Source: "..\buildResources\appLauncher.bat"; DestDir: "{app}"; Flags: ignoreversion
-   Source: "..\buildResources\README.txt"; DestDir: "{app}"; Flags: ignoreversion
+   Source: "windows\build\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
+   Source: "windows\buildResources\appLauncher.bat"; DestDir: "{app}"; Flags: ignoreversion
+   Source: "windows\buildResources\README.txt"; DestDir: "{app}"; Flags: ignoreversion
 
    [Icons]
    Name: "{group}\{#GetEnv('APP_NAME')}"; Filename: "{app}\appLauncher.bat"

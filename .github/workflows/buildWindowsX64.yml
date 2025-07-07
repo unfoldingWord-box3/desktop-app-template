@@ -80,12 +80,14 @@ jobs:
         run: |
           dir "${{ github.workspace }}\windows\install\"
           dir "${{ github.workspace }}\releases\windows"
+          dir "${{ github.workspace }}\windows\"
+          dir "${{ github.workspace }}\"
 
       # Build the Inno Setup Installer
       - name: Compile .ISS to .EXE Installer
         uses: Minionguyjpro/Inno-Setup-Action@v1.2.2
         with:
-          path: ${{ github.workspace }}\windows\install\makeInstall.iss
+          path: windows\install\makeInstall.iss
           options: /O"${{ github.workspace }}\releases\windows"
 
       # Get names for exe artifact
