@@ -14,10 +14,8 @@ jobs:
 
       # Install Inno Setup
       - name: Install Inno Setup
-        run: |
-          Invoke-WebRequest -Uri "https://www.jrsoftware.org/download.php/is-unicode.exe" -OutFile "$env:TEMP\inno-setup.exe"
-          Start-Process -FilePath "$env:TEMP\inno-setup.exe" -ArgumentList "/VERYSILENT", "/SUPPRESSMSGBOXES", "/NORESTART", "/SP-" -Wait
-
+        run: choco install innosetup
+        
       # Rust
       - name: Set up Rust
         id: set-up-rust
