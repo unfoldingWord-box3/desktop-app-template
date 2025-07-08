@@ -25,7 +25,7 @@ jobs:
       - name: Extract APP_VERSION from app_config.env
         id: get_app_version
         run: |
-          $envFile = "..\app_config.env"
+          $envFile = ".\app_config.env"
           $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_VERSION\s*=' }
           $version = $versionLine -replace ".*=(.*)", '$1'
           $version = $version.Trim("'").Trim('"')   # Remove quotes if present
@@ -35,7 +35,7 @@ jobs:
       - name: Extract APP_NAME from app_config.env
         id: get_app_name
         run: |
-          $envFile = "..\app_config.env"
+          $envFile = ".\app_config.env"
           $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_NAME\s*=' }
           $version = $versionLine -replace ".*=(.*)", '$1'
           $version = $version.Trim("'").Trim('"')   # Remove quotes if present
