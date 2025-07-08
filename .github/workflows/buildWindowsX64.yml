@@ -123,7 +123,7 @@ jobs:
         run: |
           echo "APP_NAME: ${{ env.APP_NAME }}"
           echo "APP_VERSION: ${{ env.APP_VERSION }}"
-          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" -O".\releases\windows" makeInstall.iss
+          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" -O"..\..\releases\windows" makeInstall.iss
 
       # Get names for exe artifact
       - name: get names for exe artifact
