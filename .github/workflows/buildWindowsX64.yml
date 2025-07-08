@@ -95,12 +95,32 @@ jobs:
           echo ".\windows\buildResources\appLauncher.bat"
           type .\windows\buildResources\appLauncher.bat
 
+      # Set APP_VERSION from app_config.env
+      - name: Extract APP_VERSION from app_config.env
+        id: get_app_version
+        run: |
+          $envFile = "..\app_config.env"
+          $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_VERSION\s*=' }
+          $version = $versionLine -replace ".*=(.*)", '$1'
+          $version = $version.Trim("'").Trim('"')   # Remove quotes if present
+          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      # Set APP_NAME from app_config.env
+      - name: Extract APP_NAME from app_config.env
+        id: get_app_version
+        run: |
+          $envFile = "..\app_config.env"
+          $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_NAME\s*=' }
+          $version = $versionLine -replace ".*=(.*)", '$1'
+          $version = $version.Trim("'").Trim('"')   # Remove quotes if present
+          echo "APP_NAME=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+
       # Build the Inno Setup Installer
       - name: Compile .ISS to .EXE Installer
         working-directory: .\windows\install
         run: |
-          $env:APP_NAME = ${{ github.event.repository.name }}
-          $env:APP_VERSION = "1.0.0"
+          echo "APP_NAME: ${{ env.APP_NAME }}"
+          echo "APP_VERSION: ${{ env.APP_VERSION }}"
           "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" makeInstall.iss /O".\releases\windows"
 
       # Get names for exe artifact
