@@ -21,6 +21,10 @@ jobs:
         id: set-up-rust
         uses: moonrepo/setup-rust@v1
 
+      # Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       # Set APP_VERSION from app_config.env
       - name: Extract APP_VERSION from app_config.env
         id: get_app_version
@@ -40,11 +44,7 @@ jobs:
           $version = $versionLine -replace ".*=(.*)", '$1'
           $version = $version.Trim("'").Trim('"')   # Remove quotes if present
           echo "APP_NAME=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
-
-      # Checkout the repository
-      - name: Checkout repository
-        uses: actions/checkout@v3
-
+      
       # Install the repository
       - name: Run install_this_repo.bat
         working-directory: .\windows\install
