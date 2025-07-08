@@ -107,7 +107,7 @@ jobs:
 
       # Set APP_NAME from app_config.env
       - name: Extract APP_NAME from app_config.env
-        id: get_app_version
+        id: get_app_name
         run: |
           $envFile = "..\app_config.env"
           $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_NAME\s*=' }
