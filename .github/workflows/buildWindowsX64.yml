@@ -99,14 +99,9 @@ jobs:
       - name: Compile .ISS to .EXE Installer
         working-directory: .\windows\install
         run: |
-          & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" makeInstall.iss /O".\releases\windows"
-          
-#      # Build the Inno Setup Installer
-#      - name: Compile .ISS to .EXE Installer
-#        uses: Minionguyjpro/Inno-Setup-Action@v1.2.6
-#        with:
-#          path: ./windows/install/makeInstall.iss
-#          options: /O+
+          $env:APP_NAME = ${{ github.event.repository.name }}
+          $env:APP_VERSION = "1.0.0"
+          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" makeInstall.iss /O".\releases\windows"
 
       # Get names for exe artifact
       - name: get names for exe artifact
