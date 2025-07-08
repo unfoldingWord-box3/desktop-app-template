@@ -34,6 +34,7 @@ jobs:
           $version = $versionLine -replace ".*=(.*)", '$1'
           $version = $version.Trim("'").Trim('"')   # Remove quotes if present
           echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "APP_VERSION=$version"
 
       # Set APP_NAME from app_config.env
       - name: Extract APP_NAME from app_config.env
@@ -44,6 +45,7 @@ jobs:
           $version = $versionLine -replace ".*=(.*)", '$1'
           $version = $version.Trim("'").Trim('"')   # Remove quotes if present
           echo "APP_NAME=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+          echo "APP_NAME=$version"
       
       # Install the repository
       - name: Run install_this_repo.bat
