@@ -21,6 +21,26 @@ jobs:
         id: set-up-rust
         uses: moonrepo/setup-rust@v1
 
+      # Set APP_VERSION from app_config.env
+      - name: Extract APP_VERSION from app_config.env
+        id: get_app_version
+        run: |
+          $envFile = "..\app_config.env"
+          $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_VERSION\s*=' }
+          $version = $versionLine -replace ".*=(.*)", '$1'
+          $version = $version.Trim("'").Trim('"')   # Remove quotes if present
+          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+
+      # Set APP_NAME from app_config.env
+      - name: Extract APP_NAME from app_config.env
+        id: get_app_name
+        run: |
+          $envFile = "..\app_config.env"
+          $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_NAME\s*=' }
+          $version = $versionLine -replace ".*=(.*)", '$1'
+          $version = $version.Trim("'").Trim('"')   # Remove quotes if present
+          echo "APP_NAME=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
+
       # Checkout the repository
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -94,26 +114,6 @@ jobs:
           type .\windows\build\pankosmia-desktop-app-template.bat
           echo ".\windows\buildResources\appLauncher.bat"
           type .\windows\buildResources\appLauncher.bat
-
-      # Set APP_VERSION from app_config.env
-      - name: Extract APP_VERSION from app_config.env
-        id: get_app_version
-        run: |
-          $envFile = "..\app_config.env"
-          $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_VERSION\s*=' }
-          $version = $versionLine -replace ".*=(.*)", '$1'
-          $version = $version.Trim("'").Trim('"')   # Remove quotes if present
-          echo "APP_VERSION=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
-
-      # Set APP_NAME from app_config.env
-      - name: Extract APP_NAME from app_config.env
-        id: get_app_name
-        run: |
-          $envFile = "..\app_config.env"
-          $versionLine = Get-Content $envFile | Where-Object { $_ -match '^APP_NAME\s*=' }
-          $version = $versionLine -replace ".*=(.*)", '$1'
-          $version = $version.Trim("'").Trim('"')   # Remove quotes if present
-          echo "APP_NAME=$version" | Out-File -FilePath $env:GITHUB_ENV -Append
 
       # Build the Inno Setup Installer
       - name: Compile .ISS to .EXE Installer
