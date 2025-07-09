@@ -29,12 +29,12 @@ npm install
 
 4. Edit app_config.env, entering the App Name, version number, theme, assets (might not change), and clients.
 5. `cd [os]/scripts`
-6. Run[^1] the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
-7. Run[^1] the `app_setup` script to generate the config files to match `app_config.env`. Re-run[^1] the `app_setup` script anytime `app_config.env` is modified.
-8. Run[^1] the `build_clients` script to build all clients. Be patient. This will take a while.
-   - This script is intended for setting all clients up for <b>first use</b>, or for rebuilding <b>all</b> clients to their <b>latest main</b> branch. It changes to the main[^2] branch, pulls the latest, and builds (or rebuilds) every client every time it is run.<br />
+6. Run<sup id="a1">[[1]](#f1)</sup> the `clone` script to clone all repos listed in `app_config.env` (assets and clients)
+7. Run<sup id="a1">[[1]](#f1)</sup> the `app_setup` script to generate the config files to match `app_config.env`. Re-run<sup id="a1">[[1]](#f1)</sup> the `app_setup` script anytime `app_config.env` is modified.
+8. Run<sup id="a1">[[1]](#f1)</sup> the `build_clients` script to build all clients. Be patient. This will take a while.
+   - This script is intended for setting all clients up for <b>first use</b>, or for rebuilding <b>all</b> clients to their <b>latest main</b> branch. It changes to the main<sup id="a2">[[2]](#f2)</sup> branch, pulls the latest, and builds (or rebuilds) every client every time it is run.<br />
    - Build client manually when you want to use a branch or when you only need to rebuild one client or when you do not want all clients built from their latest main branch!
-9. Run[^1] the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
+9. Run<sup id="a1">[[1]](#f1)</sup> the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
 10.  Plan at some point to customize this readme for your project.  At minimum:
     - rewrite the top most "# desktop-app-template" section
     - replace all instances of "[your-desktop-app-repo-name]" with your desktop app repo name"
@@ -42,12 +42,12 @@ npm install
 
 ## Use
 
- - Run[^1] the `run` script to start the server without a browser launch.
+ - Run<sup id="a1">[[1]](#f1)</sup> the `run` script to start the server without a browser launch.
     - Consider also if you need to delete ~/pankosmia_working first.
-   - You'll want to restart the server if deleting ~/pankosmia_working after starting the server. To restart, exit the terminal window where the server is running the run the `run` script[^1] again.
-   - Only one instance of the server can be running at a time.[^3]
+   - You'll want to restart the server if deleting ~/pankosmia_working after starting the server. To restart, exit the terminal window where the server is running the run the `run` script<sup id="a1">[[1]](#f1)</sup> again.
+   - Only one instance of the server can be running at a time.<sup id="a3">[[3]](#f3)</sup>
  - Client development: Manually build the client(s) changed, stop the server it is is running, then start the server (`run`).  The `run` script will re-assemble the environment to include your build.
- - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run[^1] the `bundle_...` script.
+ - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run<sup id="a1">[[1]](#f1)</sup> the `bundle_...` script.
  - To build a release or a test release:
    1. [Run each workflow manually](https://docs.github.com/en/actions/how-tos/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow#running-a-workflow) (Actions > [select workflow] > Run workflow). The current main branch of client repo and resource at the time of running the workflow will be used.
    2. Download resulting artifacts (Actions > click the name of a run to see the workflow run summary > scroll down to the bottom to the Artifacts section > to download, click either the name of each artifact or the down arrow on each row
@@ -63,22 +63,19 @@ npm install
  - To sync this repo with its upstream, run the `sync` script.
 
 ## Setup, Use, and Maintenance Footnotes
-[^1]: Windows developers, run <b>.bat</b> scripts from a <b>Powershell or Command terminal</b>:
-
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\[your-desktop-app-repo-name]\windows\scripts>_ `.\[scriptname].bat`<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use a **powershell** terminal for the **.ps1** build scripts.
-
+[<b id="f1">1</b>] ...  Windows developers, run <b>.bat</b> scripts from a <b>Powershell or Command terminal</b>:<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos\pankosmia\[your-desktop-app-repo-name]\windows\scripts>_ `.\[scriptname].bat`<br />
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Use a **powershell** terminal for the **.ps1** build scripts.
+<br />
 MacOS developers, run .bsh scripts from a **linux terminal**:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/[your-desktop-app-repo-name]/linux/scripts>_ `./[scriptname].bsh`
-
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/[your-desktop-app-repo-name]/linux/scripts>_ `./[scriptname].bsh`
+<br />
 Linux developers, run .zsh scripts from a **MacOS terminal**:<br />
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/[your-desktop-app-repo-name]/macos/scripts>_ `./[scriptname].zsh`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;_...repos/pankosmia/[your-desktop-app-repo-name]/macos/scripts>_ `./[scriptname].zsh`
 
-<br />
-[^2]: The build script will fail on any clients set to a different branch with uncommitted changes or with conflicts vs, the latest main pull. Scroll back up in the terminal to find any build errors and address them.
+[<b id="f2">2</b>] ... The build script will fail on any clients set to a different branch with uncommitted changes or with conflicts vs, the latest main pull. Scroll back up in the terminal to find any build errors and address them.
 
-<br />
-[^3]: If running into an error saying that another instance is running, you can either find the other instance and stop it, or simply reboot. Another instance could be one started from a .zip, .tgz, installed version, run from a different repo, or a manually started panksomia-web.
+[<b id="f3">3</b>] ... If running into an error saying that another instance is running, you can either find the other instance and stop it, or simply reboot. Another instance could be one started from a .zip, .tgz, installed version, run from a different repo, or a manually started panksomia-web.
 
 ## Additional Info TL;DR - For reference when needed!
 ### Ecosystem setup and configuration
