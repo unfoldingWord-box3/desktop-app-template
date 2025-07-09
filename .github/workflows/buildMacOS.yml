@@ -35,6 +35,7 @@ jobs:
           chmod +x ./macos/scripts/build_clients.zsh
           chmod +x ./macos/install/build_server_bundle_zip.zsh
           chmod +x ./macos/install/makeAllInstalls.sh
+
       - name: Run app_setup.zsh
         working-directory: ./macos/scripts
         run: ./app_setup.zsh
@@ -58,6 +59,7 @@ jobs:
           cd ./releases/macos
           echo "ZIP_NAME=$(ls *.zip | head -n 1)" >> $GITHUB_ENV
           cd ../..
+
       - name: Upload zip for terminal artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -88,6 +90,7 @@ jobs:
           path: |
             ./macos/build/${{ env.PKG_NAME_ARM }}
             ./macos/build/README.txt
+
       - name: Upload intel64 artifacts
         uses: actions/upload-artifact@v4
         with:

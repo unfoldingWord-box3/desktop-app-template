@@ -3,7 +3,7 @@
 # This script is meant for use with gh action runner, and does not confirm the server is off because it is a new run each time.
 # It is run from pankosmia\[this-repo's-name]\windows\install directory in powershell by:  .\bundle_zip.ps1
 
-# Assumes app_setup.bat and install_this_repo.bat have already run; They have in buildWindowsX64.yml
+# Assumes app_setup.bat has already been run, along with `npm install` on this repo; They have in buildWindowsX64.yml
 
 get-content ..\..\app_config.env | foreach {
   $name, $value = $_.split('=')

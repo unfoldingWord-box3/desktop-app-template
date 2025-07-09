@@ -52,6 +52,7 @@ jobs:
           cd ./releases/linux
           echo "TGZ_NAME=$(ls *.tgz | head -n 1)" >> $GITHUB_ENV
           cd ../..
+
       - name: Upload tgz for terminal artifacts
         uses: actions/upload-artifact@v4
         with:

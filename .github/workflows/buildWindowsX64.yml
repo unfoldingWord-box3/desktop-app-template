@@ -81,6 +81,7 @@ jobs:
           echo "Zip for terminal name:"
           $ZIP_NAME = Get-ChildItem -Path ".\releases\windows\*.zip" -Name
           echo "ZIP_NAME=$ZIP_NAME" >> $env:GITHUB_ENV
+
       # Upload zip for terminal artifact
       - name: Upload zip for terminal artifact
         uses: actions/upload-artifact@v4
@@ -93,6 +94,7 @@ jobs:
         run: |
           echo "github.event.repository.name: ${{ github.event.repository.name }}"
           echo "github.workspace: ${{ github.workspace }}"
+
       # Run the Inno Setup Installer and build the exe
       - name: Compile .ISS to .EXE Installer
         working-directory: .\windows\install
@@ -101,12 +103,14 @@ jobs:
           echo "APP_VERSION: ${{ env.APP_VERSION }}"
           echo "FILE_APP_NAME: ${{ env.FILE_APP_NAME }}"
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /O"..\..\releases\windows" makeInstall.iss
+
       # Get names for exe artifact
       - name: get names for exe artifact
         run: |
           echo "Exe for terminal name:"
           $EXE_NAME = Get-ChildItem -Path ".\releases\windows\*.exe" -Name
           echo "EXE_NAME=$EXE_NAME" >> $env:GITHUB_ENV
+
       # Upload exe artifact
       - name: Upload exe artifact
         uses: actions/upload-artifact@v4
