@@ -21,7 +21,7 @@ Tested on:
 </pre></ul>
 
 2. Replace all instances of "desktop-app-template" in packages.json with "[your-desktop-app-repo-name]" and update the name and description.
-3. At the root of your fork of this repo, run
+3. At the root of your clone of this repo, run
 
 <ul><pre>
 npm install
