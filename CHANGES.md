@@ -30,3 +30,23 @@
 - Images slideshow (eg FIA images and maps)
 - Juxtalinear viewer
 - Basic audio "viewer"
+
+###	 Desktop App Template
+
+- Setup and Maintenance Scripts (linux, macos, and windows):
+  - App setup - as per app config file
+  - Clone - all client repos and resources as per app config file
+  - Build clients - main branch of all clients as per app config file
+  - Sync - keeps forks current with intended differences excluded
+- Development Environment Scripts (linux, macos, and windows):
+  - Build Server - builds the server and assembles client builds
+  - Run - re-assembles client builds and starts the server
+  - Clean - removes client builds and cleans the server
+  - Bundle - packages the server and client builds
+- Github Action Workflows (linux, macos, and windows):
+  - Follows app config file
+  - Clones all repos
+  - Builds all clients
+  - Builds server
+  - Assembles artifacts (tgz, zip, exe, pkg)
+  - Run manually from app repos as needed
