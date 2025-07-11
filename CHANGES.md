@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## v0.3.0 (x Jul 2025)
+## v0.3.0 (14 Jul 2025)
 ### General
 - Fix scroll and page height issues
 - Make margins/padding more consistent
