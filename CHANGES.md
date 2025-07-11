@@ -31,7 +31,7 @@
 - Juxtalinear viewer
 - Basic audio "viewer"
 
-###	 Desktop App Template
+###	Desktop App Template
 - Setup and Maintenance Scripts (linux, macos, and windows):
   - App setup - as per app config file
   - Clone - all client repos and resources as per app config file
