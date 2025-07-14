@@ -1,4 +1,3 @@
-
 <#
 .SYNOPSIS
     Creates a Windows installer package for the Liminal application.
@@ -54,7 +53,7 @@ try {
     # Clean up and create project directories
     Remove-Item -Path "..\temp\project" -Recurse -Force -ErrorAction SilentlyContinue
     $projectPath = "..\temp\project"
-    $payloadPath = "$projectPath\payload\Liminal"
+    $payloadPath = Join-Path $projectPath "payload\Liminal"
 
     New-Item -ItemType Directory -Force -Path $payloadPath | Out-Null
 
@@ -68,16 +67,43 @@ try {
 
     # Copy electron files
     Write-Host "Copying Electron files..."
-    $electronSrcPath = "..\..\buildResources\electron"
-    $electronDestPath = "$payloadPath\electron"
-    if (Test-Path $electronSrcPath) {
-        Copy-Item -Path $electronSrcPath -Destination $electronDestPath -Recurse -Force
-    }
+    try {
+        $electronSrcPath = Join-Path $PSScriptRoot "..\..\buildResources\electron"
+        $electronDestPath = Join-Path $payloadPath "electron"
 
-    # Copy architecture-specific electron files
-    $archElectronPath = "..\temp\electron.$arch"
-    if (Test-Path $archElectronPath) {
-        Copy-Item -Path "$archElectronPath\*" -Destination "$electronDestPath" -Recurse -Force
+        Write-Host "Electron source path: $electronSrcPath" -ErrorAction SilentlyContinue
+        Write-Host "Electron destination path: $electronDestPath" -ErrorAction SilentlyContinue
+
+        # Ensure source exists
+        if (-not (Test-Path $electronSrcPath)) {
+            Write-Error "Source path not found: $electronSrcPath"
+            exit 1
+        }
+        
+        
+
+        # Ensure destination parent exists
+        $destParent = Split-Path -Parent $electronDestPath
+        if (-not (Test-Path $destParent)) {
+            New-Item -ItemType Directory -Path $destParent -Force | Out-Null
+        }
+
+        # Copy main electron files
+        Copy-Item -Path $electronSrcPath -Destination $electronDestPath -Recurse -Force -ErrorAction Stop
+        Write-Host "Successfully copied electron files"
+
+        # Copy architecture-specific files
+        $archElectronPath = Join-Path $PSScriptRoot "..\temp\electron.$arch"
+        if (Test-Path $archElectronPath) {
+            Copy-Item -Path "$archElectronPath\*" -Destination $electronDestPath -Recurse -Force -ErrorAction Stop
+            Write-Host "Successfully copied architecture-specific files"
+        } else {
+            Write-Warning "Architecture-specific path not found: $archElectronPath"
+        }
+    }
+    catch {
+        Write-Error "Failed to copy electron files: $_"
+        exit 1
     }
 
     # Copy README
