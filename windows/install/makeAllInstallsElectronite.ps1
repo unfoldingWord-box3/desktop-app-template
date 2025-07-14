@@ -1,0 +1,63 @@
+
+<#
+.SYNOPSIS
+    Creates Windows installation packages for Liminal application.
+
+.DESCRIPTION
+    This script automates the build process for Liminal Windows installers:
+    - Downloads Electron and Liminal releases for specified architectures
+    - Processes and packages the files
+    - Creates installation packages for each supported architecture
+    - Currently supports Intel64 architecture (ARM64 support is commented out)
+
+.NOTES
+    Requires PowerShell and depends on:
+    - getElectronRelease.ps1
+    - getLiminalRelease.ps1
+    - makeInstallFromZip.ps1
+#>
+
+# Define URLs for different architectures
+$ElectronArm64 = "https://github.com/unfoldingWord/electronite/releases/download/v25.3.2-graphite/electronite-v25.3.2-graphite-win32-arm64.zip"
+$ElectronIntel64 = "https://github.com/unfoldingWord/electronite/releases/download/v25.3.2-graphite/electronite-v25.3.2-graphite-win32-x64.zip"
+
+# Loop through architectures
+# foreach ($ARCH in @("intel64", "arm64")) {
+
+foreach ($ARCH in @("intel64")) {
+    Write-Host "Building for architecture: $ARCH"
+
+    # Set download URLs based on architecture
+    $downloadElectronUrl = $ElectronIntel64
+    $expectedLiminalZip = "*-windows-*.zip"
+
+    if ($ARCH -eq "arm64") {
+        $downloadElectronUrl = $ElectronArm64
+        $expectedLiminalZip = "*-windows-*.zip" # TODO need to set for arm
+    }
+
+    # Get Electron release
+    Write-Host "Getting Electron release..."
+    $electronResult = & "$PSScriptRoot\getElectronRelease.ps1" -downloadUrl $downloadElectronUrl -arch $ARCH
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Error: Failed to get Electron release files at $downloadElectronUrl"
+        exit 1
+    }
+
+    # verify liminal zip
+    If (Test-Path ..\..\releases\windows\$expectedLiminalZip) {
+      echo "Error: Missing windows .zip release"
+      exit 1
+    }
+
+    # Make install from zip
+    Write-Host "Creating install package..."
+    $zipPath = Resolve-Path "..\..\releases\windows\liminal*.zip"
+    $installResult = & "$PSScriptRoot\makeInstallElectroniteFromZip.ps1" -zipPath $zipPath -destinationFolder "..\temp\release" -arch $ARCH
+    if ($LASTEXITCODE -ne 0) {
+        Write-Host "Error: Build failed for architecture $ARCH"
+        exit 1
+    }
+}
+
+Write-Host "All architectures built successfully"

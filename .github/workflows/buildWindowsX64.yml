@@ -2,6 +2,10 @@ name: Windows x64 Build
 
 on:
   workflow_dispatch:
+  push:
+    branches: ["**"]     # Run on push to any branch
+  pull_request:
+    branches: ["**"]     # Run on PR to any branch
 
 jobs:
   build-for-windows-x64:
@@ -117,3 +121,10 @@ jobs:
         with:
           name: ${{ env.EXE_NAME }}
           path: .\releases\windows\${{ env.EXE_NAME }}
+
+      # Build electronite
+      - name: Run makeAllInstallsElectronite.ps1
+        working-directory: ./windows/install
+        run: ./makeAllInstallsElectronite.ps1
+
+
