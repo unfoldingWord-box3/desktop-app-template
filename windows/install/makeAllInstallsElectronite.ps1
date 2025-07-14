@@ -17,8 +17,8 @@
 #>
 
 # Define URLs for different architectures
-$ElectronArm64 = "https://github.com/unfoldingWord/electronite/releases/download/v17.1.0-graphite/electronite-v17.1.0-graphite-win32-arm64.zip"
-$ElectronIntel64 = "https://github.com/unfoldingWord/electronite/releases/download/v17.1.0-graphite/electronite-v17.1.0-graphite-win32-x64.zip"
+$ElectronArm64 = "https://github.com/unfoldingWord/electronite/releases/download/v37.1.0-graphite/electronite-v37.1.0-graphite-win32-arm64.zip"
+$ElectronIntel64 = "https://github.com/unfoldingWord/electronite/releases/download/v37.1.0-graphite/electronite-v37.1.0-graphite-win32-x64.zip"
 
 # Loop through architectures
 # foreach ($ARCH in @("intel64", "arm64")) {
