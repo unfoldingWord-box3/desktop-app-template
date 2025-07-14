@@ -87,19 +87,12 @@ mkdir -p ../project/scripts
 cp ../build/post_install_script.sh ../project/scripts/postinstall
 chmod +x ../project/scripts/postinstall
 
-# maintain a one-off identifier for simpler upgrades of early test releases
-if [ "$FILE_APP_NAME" == "liminal" ]; then
-  IDENTIFIER="com.yourdomain.liminal"
-else
-  IDENTIFIER="pankosmia.${FILE_APP_NAME}"
-fi
-
 # build pkg
 cd ..
 pkgbuild \
   --root ./project/payload \
   --scripts ./project/scripts \
-  --identifier ${IDENTIFIER} \
+  --identifier ${APP_NAME} \
   --version "$APP_VERSION" \
   --install-location /Applications \
   ./build/${FILE_APP_NAME}-installer-${arch}-${APP_VERSION}.pkg
