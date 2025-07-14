@@ -94,6 +94,8 @@ try {
 
         # Copy architecture-specific files
         $archElectronPath = Join-Path $PSScriptRoot "..\temp\electron.$arch"
+        Write-Host "Electron arch path: $archElectronPath" -ErrorAction SilentlyContinue
+
         if (Test-Path $archElectronPath) {
             Copy-Item -Path "$archElectronPath\*" -Destination $electronDestPath -Recurse -Force -ErrorAction Stop
             Write-Host "Successfully copied architecture-specific files"
