@@ -78,6 +78,9 @@ echo "Replaced \${FILE_APP_NAME} with \"$FILE_APP_NAME\" in $PLIST_FILE."
 #remove backup
 rm "$PLIST_FILE.bak"
 
+echo "New  plist file:"
+type $PLIST_FILE
+
 cp -R ./bin ../project/payload/${FILE_APP_NAME}.app/Contents/
 chmod 755 ../project/payload/${FILE_APP_NAME}.app/Contents/bin/server.bin
 
