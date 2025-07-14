@@ -5,7 +5,7 @@
 INSTALL_DIR="/Applications/%%APP_NAME%%.app"
 
 # Ensure the start-%%FILE_APP_NAME%%.zsh and server.bin scripts are executable
-chmod +x "$INSTALL_DIR/Contents/MacOS/start-%%APP_NAME%%.sh"
+chmod +x "$INSTALL_DIR/Contents/MacOS/start-%%FILE_APP_NAME%%.sh"
 chmod +x "$INSTALL_DIR/Contents/bin/server.bin"
 
 exit 0
