@@ -102,7 +102,7 @@ cd ..
 pkgbuild \
   --root ./project/payload \
   --scripts ./project/scripts \
-  --identifier "$APP_NAME" \
+  --identifier ${IDENTIFIER} \
   --version "$APP_VERSION" \
   --install-location /Applications \
   ./build/${FILE_APP_NAME}-installer-${arch}-${APP_VERSION}.pkg

@@ -13,12 +13,12 @@
     Requires PowerShell and depends on:
     - getElectronRelease.ps1
     - getLiminalRelease.ps1
-    - makeInstallFromZip.ps1
+    - makeInstallFromZip.ps1F
 #>
 
 # Define URLs for different architectures
-$ElectronArm64 = "https://github.com/unfoldingWord/electronite/releases/download/v25.3.2-graphite/electronite-v25.3.2-graphite-win32-arm64.zip"
-$ElectronIntel64 = "https://github.com/unfoldingWord/electronite/releases/download/v25.3.2-graphite/electronite-v25.3.2-graphite-win32-x64.zip"
+$ElectronArm64 = "https://github.com/unfoldingWord/electronite/releases/download/v17.1.0-graphite/electronite-v17.1.0-graphite-win32-arm64.zip"
+$ElectronIntel64 = "https://github.com/unfoldingWord/electronite/releases/download/v17.1.0-graphite/electronite-v17.1.0-graphite-win32-x64.zip"
 
 # Loop through architectures
 # foreach ($ARCH in @("intel64", "arm64")) {
