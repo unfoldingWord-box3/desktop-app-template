@@ -79,14 +79,19 @@ jobs:
           echo "Arm install:"
           ls -als ./macos/release/arm64/*.pkg
           cd ./macos/release/arm64
-          echo "PKG_NAME_ARM=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+          if [ -n "$(ls *.pkg 2>/dev/null)" ]; then
+            echo "PKG_NAME_ARM=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+          fi
           cd ../../..
           
           echo "Intel install:"
           ls -als ./macos/release/intel64/*.pkg
           cd ./macos/release/intel64
-          echo "PKG_NAME_INTEL=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+          if [ -n "$(ls *.pkg 2>/dev/null)" ]; then
+            echo "PKG_NAME_INTEL=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+          fi
           cd ../../..
+          
       - name: Upload arm64 artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -104,3 +109,41 @@ jobs:
         with:
           name: MacOS-PKG-README-arm64-and-intel64.txt
           path: ./macos/build/README.txt
+
+# build electronite installs
+      
+      - name: Run makeAllInstallsElectronite.sh
+        working-directory: ./macos/install
+        run: ./makeAllInstallsElectronite.sh
+
+      - name: get Installer names
+        run: |
+          echo "Arm64 install:"
+          cd ./releases/macos
+          ls -als *.pkg
+          if [ -n "$(ls *-installer-standalone-arm64*.pkg 2>/dev/null)" ]; then
+            echo "PKG_NAME_ARM=$(ls *-installer-standalone-arm64*.pkg | head -n 1)" >> $GITHUB_ENV
+          fi
+          cd ../..
+          
+          echo "Intel install:"
+          cd ./releases/macos
+          ls -als *.pkg
+          if [ -n "$(ls *-installer-standalone-intel64*.pkg 2>/dev/null)" ]; then
+            echo "PKG_NAME_INTEL=$(ls *-installer-standalone-intel64*.pkg | head -n 1)" >> $GITHUB_ENV
+          fi
+          cd ../..
+
+      - name: Upload arm64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PKG_NAME_ARM }}
+          path: ./macos/release/arm64/${{ env.PKG_NAME_ARM }}
+
+      - name: Upload intel64 artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.PKG_NAME_INTEL }}
+          path: ./macos/release/intel64/${{ env.PKG_NAME_INTEL }}
+
+   
