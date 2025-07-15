@@ -70,8 +70,8 @@ APP_BASE_DIR="../temp/project/payload/APP_NAME.app" # temp app foldername withou
 mkdir -p ${APP_BASE_DIR}/Contents/MacOS
 
 # electron startup
-LAUNCHER="${APP_BASE_DIR}/Contents/MacOS/start-${FILE_APP_NAME}.sh"
-cp ../buildResources/appLauncherElectron.sh ${APP_BASE_DIR}/Contents/MacOS/${LAUNCHER}
+LAUNCHER_NAME="start-${FILE_APP_NAME}.sh"
+cp ../buildResources/appLauncherElectron.sh ${APP_BASE_DIR}/Contents/MacOS/${LAUNCHER_NAME}
 # copy shared electron files
 cp -R ../../buildResources/electron ${APP_BASE_DIR}/Contents/
 # now copy architecture specific electron files
@@ -121,7 +121,7 @@ type $PLIST_FILE
 
 cp -R ./bin ${APP_BASE_DIR}/Contents/
 chmod 755 ${APP_BASE_DIR}/Contents/bin/server.bin
-chmod 755 ${APP_BASE_DIR}/Contents/MacOS/${LAUNCHER}
+chmod 755 ${APP_BASE_DIR}/Contents/MacOS/${LAUNCHER_NAME}
 
 cp -R ./lib ${APP_BASE_DIR}/Contents/
 
