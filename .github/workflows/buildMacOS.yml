@@ -158,11 +158,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PKG_NAME_ARM }}
-          path: ./macos/release/arm64/${{ env.PKG_NAME_ARM }}
+          path: ./releases/macos/${{ env.PKG_NAME_ARM }}
 
       - name: Upload intel64 artifacts
         if: env.PKG_NAME_INTEL != ''
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PKG_NAME_INTEL }}
-          path: ./macos/release/intel64/${{ env.PKG_NAME_INTEL }}
+          path: ./releases/macos/${{ env.PKG_NAME_INTEL }}
