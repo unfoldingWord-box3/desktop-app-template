@@ -45,9 +45,9 @@ foreach ($ARCH in @("intel64")) {
 
     # verify liminal zip
     If (-Not (Test-Path ..\..\releases\windows\$expectedLiminalZip)) {
-    echo "Error: Missing windows .zip release"
-    exit 1
-}
+        echo "Error: Missing windows .zip release"
+        exit 1
+    }
 
     # Make install from zip
     Write-Host "Creating install package..."
