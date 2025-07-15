@@ -112,3 +112,4 @@ if (-not $installerExists) {
 
 # Clean up temp directory
 Remove-Item -Path $TEMP_DIR -Recurse -Force
+exit 0

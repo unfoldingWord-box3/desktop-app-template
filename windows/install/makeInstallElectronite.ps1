@@ -156,6 +156,7 @@ try {
     }
 
     Write-Host "Installation package created successfully"
+    exit 0
 }
 finally {
     # Restore the original working directory
