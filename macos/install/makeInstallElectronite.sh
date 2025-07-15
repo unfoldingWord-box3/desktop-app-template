@@ -31,15 +31,29 @@
 # Output:
 #   Creates installer package at: ../releases/macos/liminal_installer_<arch>_<version>.pkg
 
+# Check if APP_NAME environment variable is set
+if [ -z "$APP_NAME" ]; then
+    echo "Error: APP_NAME environment variable is not set."
+    exit 1
+fi
+
 # Check if APP_VERSION environment variable is set
 if [ -z "$APP_VERSION" ]; then
     echo "Error: APP_VERSION environment variable is not set."
     exit 1
 fi
 
+# Check if FILE_APP_NAME environment variable is set
+if [ -z "$FILE_APP_NAME" ]; then
+    echo "Error: FILE_APP_NAME environment variable is not set."
+    exit 1
+fi
+
 arch="$1"
 
-rm -f ../../releases/macos/liminal_installer_*.pkg
+PKG_NAME="${FILE_APP_NAME}-installer-standalone-${arch}-${APP_VERSION}.pkg"
+rm -f ./build/${PKG_NAME}
+rm -f ../releases/macos/${PKG_NAME}
 
 cd ../build || exit 1
 
@@ -51,25 +65,20 @@ set -x
 
 rm -rf ../temp/project
 
-mkdir -p ../temp/project/payload/Liminal.app/Contents/MacOS
+APP_BASE_DIR="../temp/project/payload/APP_NAME.app" # temp app foldername without spaces, will rename to actual name later
 
-# convert shell script to app
-#rm -f ../buildResources/appLauncher.sh.x.c
-#shc -f ../buildResources/appLauncher.sh -o ../temp/project/payload/Liminal.app/Contents/MacOS/startLiminal
-#chmod 555 ../temp/project/payload/Liminal.app/Contents/MacOS/startLiminal
-
-## non-electron startup
-# cp ../buildResources/appLauncher.sh ../temp/project/payload/Liminal.app/Contents/MacOS/startLiminal.sh
+mkdir -p ${APP_BASE_DIR}/Contents/MacOS
 
 # electron startup
-cp ../buildResources/appLauncherElectron.sh ../temp/project/payload/Liminal.app/Contents/MacOS/startLiminal.sh
+LAUNCHER="${APP_BASE_DIR}/Contents/MacOS/start-${FILE_APP_NAME}.sh"
+cp ../buildResources/appLauncherElectron.sh ${APP_BASE_DIR}/Contents/MacOS/${LAUNCHER}
 # copy shared electron files
-cp -R ../../buildResources/electron ../temp/project/payload/Liminal.app/Contents/
+cp -R ../../buildResources/electron ${APP_BASE_DIR}/Contents/
 # now copy architecture specific electron files
-cp -R ../temp/electron.$arch/* ../temp/project/payload/Liminal.app/Contents/electron
+cp -R ../temp/electron.$arch/* ${APP_BASE_DIR}/Contents/electron
 
 # Check if Electron executable owner is current user
-ELECTRON_OWNER=$(stat -f %u ../temp/project/payload/Liminal.app/Contents/electron/Electron.app/Contents/MacOS/Electron)
+ELECTRON_OWNER=$(stat -f %u ${APP_BASE_DIR}/Contents/electron/Electron.app/Contents/MacOS/Electron)
 CURRENT_USER=$(id -u)
 if [ "$ELECTRON_OWNER" != "$CURRENT_USER" ]; then
     echo "Error: Electron executable owner is not current user. Please run: sudo chown -R $(id -u):$(id -g) ../buildResources/electron.$arch/*"
@@ -77,16 +86,16 @@ if [ "$ELECTRON_OWNER" != "$CURRENT_USER" ]; then
 fi
 
 # rename Electron.app folder 
-mv ../temp/project/payload/Liminal.app/Contents/electron/Electron.app ../temp/project/payload/Liminal.app/Contents/electron/Electron
+mv ${APP_BASE_DIR}/Contents/electron/Electron.app ${APP_BASE_DIR}/Contents/electron/Electron
 
-chmod 755 ../temp/project/payload/Liminal.app/Contents/electron/Electron/Contents/MacOS/Electron
+chmod 755 ${APP_BASE_DIR}/Contents/electron/Electron/Contents/MacOS/Electron
 
-mkdir -p ../temp/project/payload/Liminal.app/Contents/Resources
-cp ../buildResources/README.md ../temp/project/payload/Liminal.app/Contents/Resources/README.md
+mkdir -p ${APP_BASE_DIR}/Contents/Resources
+cp ../buildResources/README.md ${APP_BASE_DIR}/Contents/Resources/README.md
 
-# add APP_VERSION to Info.plist
-cp ../buildResources/Info.plist ../temp/project/payload/Liminal.app/Contents/
-PLIST_FILE="../temp/project/payload/Liminal.app/Contents/Info.plist"
+# copy Info.plist
+cp ../buildResources/Info.plist ${APP_BASE_DIR}/Contents/
+PLIST_FILE="${APP_BASE_DIR}/Contents/Info.plist"
 
 # Check if the file exists
 if [ ! -f "$PLIST_FILE" ]; then
@@ -94,37 +103,54 @@ if [ ! -f "$PLIST_FILE" ]; then
     exit 1
 fi
 
-# Replace all occurrences of ${APP_VERSION} with the value of the APP_VERSION variable
+# Replace all occurrences of ${APP_NAME}, ${APP_VERSION} and ${FILE_APP_NAME} with the value of their variables
 sed -i.bak "s/\${APP_VERSION}/$APP_VERSION/g" "$PLIST_FILE"
+sed -i.bak "s/\${APP_NAME}/$APP_NAME/g" "$PLIST_FILE"
+sed -i.bak "s/\${FILE_APP_NAME}/$FILE_APP_NAME/g" "$PLIST_FILE"
 
 # Print success message
 echo "Replaced \${APP_VERSION} with \"$APP_VERSION\" in $PLIST_FILE."
+echo "Replaced \${APP_NAME} with \"$APP_NAME\" in $PLIST_FILE."
+echo "Replaced \${FILE_APP_NAME} with \"$FILE_APP_NAME\" in $PLIST_FILE."
 #echo "Backup of original file saved as $PLIST_FILE.bak"
 #remove backup
 rm "$PLIST_FILE.bak"
 
-cp -R ./bin ../temp/project/payload/Liminal.app/Contents/
-chmod 755 ../temp/project/payload/Liminal.app/Contents/bin/server.bin
-chmod 755 ../temp/project/payload/Liminal.app/Contents/MacOS/startLiminal.sh
+echo "New  plist file:"
+type $PLIST_FILE
 
-cp -R ./lib ../temp/project/payload/Liminal.app/Contents/
+cp -R ./bin ${APP_BASE_DIR}/Contents/
+chmod 755 ${APP_BASE_DIR}/Contents/bin/server.bin
+chmod 755 ${APP_BASE_DIR}/Contents/MacOS/${LAUNCHER}
+
+cp -R ./lib ${APP_BASE_DIR}/Contents/
 
 mkdir -p ../temp/project/scripts
 cp ../install/post_install_script.sh ../temp/project/scripts/postinstall
 chmod +x ../temp/project/scripts/postinstall
 
 # set execute permission on all folders
-find ../temp/project/payload/Liminal.app/ -type d -exec chmod u+x,g+x,o+x {} +
+find ${APP_BASE_DIR}/ -type d -exec chmod u+x,g+x,o+x {} +
+
+# rename to final app name
+mv ${APP_BASE_DIR} "$(dirname "${APP_BASE_DIR}")/${APP_NAME}.app"
+
+# maintain a one-off identifier for simpler upgrades of early test releases
+if [ "$FILE_APP_NAME" == "liminal" ]; then
+  IDENTIFIER="com.yourdomain.liminal"
+else
+  IDENTIFIER="pankosmia.${FILE_APP_NAME}"
+fi
 
 # build pkg
 cd ..
 pkgbuild \
   --root ./temp/project/payload \
   --scripts ./temp/project/scripts \
-  --identifier com.yourdomain.liminal \
+  --identifier ${IDENTIFIER} \
   --version "$APP_VERSION" \
   --install-location /Applications \
-  ./build/liminal_installer_${arch}_${APP_VERSION}.pkg
+  ./build/${PKG_NAME}
 
 # copy to releases folder
-cp ./build/liminal_installer_${arch}_${APP_VERSION}.pkg ../releases/macos/
+cp ./build/${PKG_NAME} ../releases/macos/

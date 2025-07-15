@@ -65,7 +65,7 @@ if [ ! -f "$PLIST_FILE" ]; then
     exit 1
 fi
 
-# Replace all occurrences of ${APP_VERSION} and ${FILE_APP_NAME} with the value of their variables
+# Replace all occurrences of ${APP_NAME}, ${APP_VERSION} and ${FILE_APP_NAME} with the value of their variables
 sed -i.bak "s/\${APP_VERSION}/$APP_VERSION/g" "$PLIST_FILE"
 sed -i.bak "s/\${APP_NAME}/$APP_NAME/g" "$PLIST_FILE"
 sed -i.bak "s/\${FILE_APP_NAME}/$FILE_APP_NAME/g" "$PLIST_FILE"

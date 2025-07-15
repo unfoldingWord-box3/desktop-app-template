@@ -48,10 +48,6 @@ echo "Processing '$filename'"
 #  exit 1
 #fi
 
-echo "stuff"
-pwd
-ls "../../releases/macos"
-
 # Create temporary directory
 TEMP_DIR=$(mktemp -d)
 echo "Created temporary directory: $TEMP_DIR"
@@ -71,9 +67,6 @@ cp -R "$TEMP_DIR"/* ../build/
 
 ./makeInstallElectronite.sh $arch
 
-rm -rf "$destination"
-mkdir -p "$destination"
-cp ../../releases/macos/liminal_installer_*.pkg "$destination"
-echo "Files at $destination"
-ls -als "$destination/"
+echo "Files at ../../releases/macos/"
+ls -als ../../releases/macos/
 
