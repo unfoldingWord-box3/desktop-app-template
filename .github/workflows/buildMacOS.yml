@@ -76,29 +76,39 @@ jobs:
 
       - name: get Installer names
         run: |
-          echo "Arm install:"
-          ls -als ./macos/release/arm64/*.pkg
-          cd ./macos/release/arm64
-          if [ -n "$(ls *.pkg 2>/dev/null)" ]; then
+          echo "Arm64 install:"
+          # check if built
+          if [ -n "$(ls ./macos/release/arm64/*.pkg 2>/dev/null)" ]; then
+            cd ./macos/release/arm64
+            echo "Found arm64 release:"
+            ls -als *.pkg
             echo "PKG_NAME_ARM=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+            cd ../../..
+          else
+            echo "No .pkg files found in ./macos/release/arm64/"
           fi
-          cd ../../..
           
-          echo "Intel install:"
-          ls -als ./macos/release/intel64/*.pkg
-          cd ./macos/release/intel64
-          if [ -n "$(ls *.pkg 2>/dev/null)" ]; then
+          echo "Intel64 install:"
+          # check if built
+          if [ -n "$(ls ./macos/release/intel64/*.pkg 2>/dev/null)" ]; then
+            cd ./macos/release/intel64
+            echo "Found intel64 release:"
+            ls -als *.pkg
             echo "PKG_NAME_INTEL=$(ls *.pkg | head -n 1)" >> $GITHUB_ENV
+            cd ../../..
+          else
+            echo "No .pkg files found in ./macos/release/intel64/"
           fi
-          cd ../../..
           
       - name: Upload arm64 artifacts
+        if: env.PKG_NAME_ARM != ''
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PKG_NAME_ARM }}
           path: ./macos/release/arm64/${{ env.PKG_NAME_ARM }}
 
       - name: Upload intel64 artifacts
+        if: env.PKG_NAME_INTEL != ''
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PKG_NAME_INTEL }}
@@ -110,6 +120,7 @@ jobs:
           name: MacOS-PKG-README-arm64-and-intel64.txt
           path: ./macos/build/README.txt
 
+#############################
 # build electronite installs
       
       - name: Run makeAllInstallsElectronite.sh
@@ -119,31 +130,39 @@ jobs:
       - name: get Installer names
         run: |
           echo "Arm64 install:"
-          cd ./releases/macos
-          ls -als *.pkg
-          if [ -n "$(ls *-installer-standalone-arm64*.pkg 2>/dev/null)" ]; then
+          # check if built
+          if [ -n "$(ls ./releases/macos/*-installer-standalone-arm64*.pkg 2>/dev/null)" ]; then
+            cd ./releases/macos
+            echo "Found arm64 release:"
+            ls -als *.pkg
             echo "PKG_NAME_ARM=$(ls *-installer-standalone-arm64*.pkg | head -n 1)" >> $GITHUB_ENV
+            cd ../..
+          else
+            echo "No arm64 .pkg files found in ./releases/macos"
           fi
-          cd ../..
           
-          echo "Intel install:"
-          cd ./releases/macos
-          ls -als *.pkg
-          if [ -n "$(ls *-installer-standalone-intel64*.pkg 2>/dev/null)" ]; then
+          echo "Intel64 install:"
+          # check if built
+          if [ -n "$(ls ./releases/macos/*-installer-standalone-intel64*.pkg 2>/dev/null)" ]; then
+            cd ./releases/macos
+            echo "Found intel64 release:"
+            ls -als *.pkg
             echo "PKG_NAME_INTEL=$(ls *-installer-standalone-intel64*.pkg | head -n 1)" >> $GITHUB_ENV
+            cd ../..
+          else
+            echo "No intel64 .pkg files found in ./releases/macos"
           fi
-          cd ../..
 
       - name: Upload arm64 artifacts
+        if: env.PKG_NAME_ARM != ''
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PKG_NAME_ARM }}
           path: ./macos/release/arm64/${{ env.PKG_NAME_ARM }}
 
       - name: Upload intel64 artifacts
+        if: env.PKG_NAME_INTEL != ''
         uses: actions/upload-artifact@v4
         with:
           name: ${{ env.PKG_NAME_INTEL }}
           path: ./macos/release/intel64/${{ env.PKG_NAME_INTEL }}
-
-   
