@@ -104,9 +104,9 @@ if ($LASTEXITCODE -ne 0) {
 
 # Verify installer exists
 $releaseFolder = "..\..\releases\windows\$arch"
-$installerExists = Get-ChildItem -Path "$releaseFolder" -Filter "LiminalSetup_*.exe"
+$installerExists = Get-ChildItem -Path "$releaseFolder" -Filter "*.exe"
 if (-not $installerExists) {
-    Write-Host "Error: LiminalSetup_*.exe not found in $releaseFolder"
+    Write-Host "Error: *.exe not found in $releaseFolder"
     exit 1
 }
 
