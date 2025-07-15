@@ -108,7 +108,7 @@ jobs:
           echo "FILE_APP_NAME: ${{ env.FILE_APP_NAME }}"
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /O"..\..\releases\windows" makeInstall.iss
 
-      # Get names for exe artifact
+      # Get names for exe artifacts
       - name: get names for exe artifact
         run: |
           echo "Exe for terminal name:"
@@ -126,5 +126,19 @@ jobs:
       - name: Run makeAllInstallsElectronite.ps1
         working-directory: ./windows/install
         run: ./makeAllInstallsElectronite.ps1
+
+      # Get names for electronite exe artifacts
+      - name: get names for exe artifact
+        run: |
+          echo "Exe for terminal name:"
+          $EXE_NAME = Get-ChildItem -Path ".\releases\windows\intel64\*.exe" -Name
+          echo "EXE_NAME=$EXE_NAME" >> $env:GITHUB_ENV
+
+      # Upload electronite exe artifact
+      - name: Upload exe artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ env.EXE_NAME }}
+          path: .\releases\windows\intel64\${{ env.EXE_NAME }}
 
 

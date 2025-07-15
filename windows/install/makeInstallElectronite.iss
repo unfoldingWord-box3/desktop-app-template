@@ -1,9 +1,9 @@
    [Setup]
-   AppName=Liminal
+   AppName={#GetEnv('APP_NAME')}
    AppVersion={#GetEnv('APP_VERSION')}
-   DefaultDirName={commonpf}\Liminal
-   DefaultGroupName=Liminal
-   OutputBaseFilename=LiminalSetup_{#GetEnv('APP_VERSION')}
+   DefaultDirName={commonpf}\{#GetEnv('APP_NAME')}
+   DefaultGroupName={#GetEnv('APP_NAME')}
+   OutputBaseFilename={#GetEnv('FILE_APP_NAME')}-standalone-setup-{#GetEnv('APP_VERSION')}
    Compression=lzma
    SolidCompression=yes
 
@@ -11,13 +11,13 @@
    Source: "..\temp\project\payload\Liminal\*"; DestDir: "{app}"; Flags: ignoreversion recursesubdirs
 
    [Icons]
-   Name: "{group}\Liminal"; Filename: "{app}\appLauncherElectron.bat"
-   Name: "{userdesktop}\Liminal"; Filename: "{app}\appLauncherElectron.bat"; Tasks: desktopicon
-   Name: "{userdesktop}\Liminal README"; Filename: "{app}\README.txt"; Tasks: desktopicon
-   Name: "{group}\Uninstall Liminal (Delete App Files)"; Filename: "{uninstallexe}"; Parameters: "/DELETE /ALLFILES"
+   Name: "{group}\{#GetEnv('APP_NAME')}"; Filename: "{app}\appLauncherElectron.bat"
+   Name: "{userdesktop}\{#GetEnv('APP_NAME')}"; Filename: "{app}\appLauncherElectron.bat"; Tasks: desktopicon
+   Name: "{userdesktop}\{#GetEnv('APP_NAME')} README"; Filename: "{app}\README.txt"; Tasks: desktopicon
+   Name: "{group}\Uninstall {#GetEnv('APP_NAME')} (Delete App Files)"; Filename: "{uninstallexe}"; Parameters: "/DELETE /ALLFILES"
 
    [Run]
    Filename: "{app}\custom_uninstaller.bat"; Parameters: "{app}"
 
    [Tasks]
-   Name: "desktopicon"; Description: "Create a Liminal &desktop icon"; GroupDescription: "Liminal icons:"
+   Name: "desktopicon"; Description: "Create a {#GetEnv('APP_NAME')} &desktop icon"; GroupDescription: "{#GetEnv('APP_NAME')} icons:"

@@ -38,6 +38,21 @@ try {
         Write-Host "Set it in PowerShell using: `$env:APP_VERSION = '0.2.6'"
         exit 1
     }
+    
+    # Check if APP_NAME environment variable is set
+    if (-not $env:APP_NAME) {
+        Write-Host "Error: APP_NAME environment variable is not set."
+        Write-Host "Set it in PowerShell using: `$env:APP_NAME = 'Limimal"
+        exit 1
+    }
+    
+    # Check if FILE_APP_NAME environment variable is set
+    if (-not $env:FILE_APP_NAME) {
+        Write-Host "Warning: FILE_APP_NAME environment variable is not set. Generating default"
+        $fileAppName = $env:APP_NAME.ToLower().Replace(" ","-").Replace("'","")   # Use lower case app name in filename and replace spaces with dashes (-) and remove single apostrophes (')
+        $env:FILE_APP_NAME = $fileAppName
+        echo "FILE_APP_NAME=$env:FILE_APP_NAME"
+    }
 
     Write-Host "Version is $env:APP_VERSION"
 
@@ -80,8 +95,6 @@ try {
             exit 1
         }
         
-        
-
         # Ensure destination parent exists
         $destParent = Split-Path -Parent $electronDestPath
         if (-not (Test-Path $destParent)) {
