@@ -72,6 +72,8 @@ mkdir -p ${APP_BASE_DIR}/Contents/MacOS
 # electron startup
 LAUNCHER_NAME="start-${FILE_APP_NAME}.sh"
 cp ../buildResources/appLauncherElectron.sh ${APP_BASE_DIR}/Contents/MacOS/${LAUNCHER_NAME}
+sed -i.bak "s/\${APP_NAME}/$APP_NAME/g" ${APP_BASE_DIR}/Contents/MacOS/${LAUNCHER_NAME}
+
 # copy shared electron files
 cp -R ../../buildResources/electron ${APP_BASE_DIR}/Contents/
 # now copy architecture specific electron files

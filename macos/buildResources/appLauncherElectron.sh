@@ -13,7 +13,7 @@ echo "Script directory: $script_dir"
 # need to find server.bin - this is needed because working directory is not set
 
 # first look for server.bin relative to directory script is in
-if [ -e $script_dir/../bin/server.bin ]; then
+   if [ -e "$script_dir/../bin/server.bin" ]; then
     BASE="$script_dir/.."
 
 # Otherwise Check for server.bin in ./bin
@@ -29,8 +29,8 @@ elif [ -e ./Contents/bin/server.bin ]; then
     BASE="./Contents"
 
 # finally fall back to default install path
-elif [ -e /Applications/Liminal.app/Contents/bin/server.bin ]; then
-    BASE="/Applications/Liminal.app/Contents"
+elif [ -e "/Applications/${APP_NAME}.app/Contents/bin/server.bin" ]; then
+    BASE="/Applications/${APP_NAME}.app/Contents"
 
 # not found
 else
@@ -41,6 +41,6 @@ fi
 echo "bin folder found at $BASE"
 
 # start electron
-cd $BASE
+cd "$BASE"
 export APP_RESOURCES_DIR=./lib/
 ./electron/Electron/Contents/MacOS/Electron ./electron
