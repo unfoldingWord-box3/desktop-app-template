@@ -73,16 +73,17 @@ try {
     New-Item -ItemType Directory -Force -Path $payloadPath | Out-Null
 
     # Copy appLauncherElectron.bat
-    $readmeSrc = "..\buildResources\appLauncherElectron.bat"
-    $readmeDest = "$payloadPath"
-    if (Test-Path $readmeSrc) {
-        New-Item -ItemType Directory -Force -Path $readmeDest | Out-Null
-        Copy-Item -Path $readmeSrc -Destination "$readmeDest\appLauncherElectron.bat" -Force
+    $startupSrc = "..\buildResources\appLauncherElectron.bat"
+    $startupDest = "$payloadPath"
+    if (Test-Path $startupSrc) {
+        New-Item -ItemType Directory -Force -Path $startupDest | Out-Null
+        Copy-Item -Path $startupSrc -Destination "$startupDest\appLauncherElectron.bat" -Force
     }
 
     # Copy electron files
     Write-Host "Copying Electron files..."
     try {
+        # Copy all the general electron files
         $electronSrcPath = Join-Path $PSScriptRoot "..\..\buildResources\electron"
         $electronDestPath = Join-Path $payloadPath "electron"
 
