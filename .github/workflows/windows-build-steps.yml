@@ -35,6 +35,7 @@ jobs:
       - name: Set up Rust
         id: set-up-rust
         uses: moonrepo/setup-rust@v1
+        timeout-minutes: 15  # Adjust the value as needed
 
       # Checkout the repository
       - name: Checkout repository
