@@ -21,7 +21,7 @@ jobs:
     uses: ./.github/workflows/macos-build-steps.yml
     with:
       runner: macos-14
-      delay_seconds: 30  
+      delay_seconds: 300 
   
   build-windows:
     name: Build on Windows x64
