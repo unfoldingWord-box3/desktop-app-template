@@ -11,13 +11,13 @@ on:
 jobs:
   build-macos-intel:
     name: Build on macOS Intel64 (x64)
-    uses: ./.github/workflows/actions/macos-build-steps.yml
+    uses: ./.github/workflows/macos-build-steps.yml
     with:
       runner: macos-13
 
   build-macos-arm:
     name: Build on macOS ARM64 (Apple Silicon)
-    uses: ./.github/workflows/actions/macos-build-steps.yml
+    uses: ./.github/workflows/macos-build-steps.yml
     with:
       runner: macos-14
       
