@@ -1,17 +1,32 @@
 name: Windows x64 Build
 
 on:
-  workflow_dispatch:
-  push:
-    branches: ["**"]     # Run on push to any branch
-  pull_request:
-    branches: ["**"]     # Run on PR to any branch
+  workflow_call:
+    inputs:
+      runner:
+        description: 'The GitHub runner to use (e.g., windows-2022, windows-2025)'
+        required: true
+        type: string
+    outputs:
+      zip-name:
+        description: "Name of the generated ZIP file"
+        value: ${{ jobs.build.outputs.zip-name }}
+      exe-name:
+        description: "Name of the generated installer EXE file"
+        value: ${{ jobs.build.outputs.exe-name }}
+      electronite-exe-name:
+        description: "Name of the generated Electronite installer EXE file"
+        value: ${{ jobs.build.outputs.electronite-exe-name }}
 
 jobs:
-  build-for-windows-x64:
-    runs-on: windows-2025  # Specify windows version 2025
+  build:
+    runs-on: ${{ inputs.runner }}
+    outputs:
+      zip-name: ${{ steps.get-zip-name.outputs.zip-name }}
+      exe-name: ${{ steps.get-exe-name.outputs.exe-name }}
+      electronite-exe-name: ${{ steps.get-electronite-exe-name.outputs.electronite-exe-name }}
+    
     steps:
-
       # Install Inno Setup
       - name: Install Inno Setup
         run: choco install innosetup
@@ -80,10 +95,12 @@ jobs:
         run: .\bundle_zip.ps1
 
       # Get names for zip artifact
-      - name: get names for zip artifact
+      - name: Get names for zip artifact
+        id: get-zip-name
         run: |
           echo "Zip for terminal name:"
           $ZIP_NAME = Get-ChildItem -Path ".\releases\windows\*.zip" -Name
+          echo "zip-name=$ZIP_NAME" >> $env:GITHUB_OUTPUT
           echo "ZIP_NAME=$ZIP_NAME" >> $env:GITHUB_ENV
 
       # Upload zip for terminal artifact
@@ -94,7 +111,7 @@ jobs:
           path: .\releases\windows\${{ env.ZIP_NAME }}
 
       # Get workspace location and repo name
-      - name: show workspace and repo name
+      - name: Show workspace and repo name
         run: |
           echo "github.event.repository.name: ${{ github.event.repository.name }}"
           echo "github.workspace: ${{ github.workspace }}"
@@ -109,10 +126,12 @@ jobs:
           & "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" /O"..\..\releases\windows" makeInstall.iss
 
       # Get names for exe artifacts
-      - name: get names for exe artifact
+      - name: Get names for exe artifact
+        id: get-exe-name
         run: |
           echo "Exe for terminal name:"
           $EXE_NAME = Get-ChildItem -Path ".\releases\windows\*.exe" -Name
+          echo "exe-name=$EXE_NAME" >> $env:GITHUB_OUTPUT
           echo "EXE_NAME=$EXE_NAME" >> $env:GITHUB_ENV
 
       # Upload exe artifact
@@ -128,17 +147,17 @@ jobs:
         run: ./makeAllInstallsElectronite.ps1
 
       # Get names for electronite exe artifacts
-      - name: get names for exe artifact
+      - name: Get names for electronite exe artifact
+        id: get-electronite-exe-name
         run: |
-          echo "Exe for terminal name:"
+          echo "Electronite exe for terminal name:"
           $EXE_NAME = Get-ChildItem -Path ".\releases\windows\intel64\*.exe" -Name
-          echo "EXE_NAME=$EXE_NAME" >> $env:GITHUB_ENV
+          echo "electronite-exe-name=$EXE_NAME" >> $env:GITHUB_OUTPUT
+          echo "ELECTRONITE_EXE_NAME=$EXE_NAME" >> $env:GITHUB_ENV
 
       # Upload electronite exe artifact
-      - name: Upload exe artifact
+      - name: Upload electronite exe artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.EXE_NAME }}
-          path: .\releases\windows\intel64\${{ env.EXE_NAME }}
-
-
+          name: ${{ env.ELECTRONITE_EXE_NAME }}
+          path: .\releases\windows\intel64\${{ env.ELECTRONITE_EXE_NAME }}
