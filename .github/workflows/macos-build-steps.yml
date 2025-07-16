@@ -45,6 +45,7 @@ jobs:
       - name: Set up Rust
         id: set-up-rust
         uses: moonrepo/setup-rust@v1
+        timeout-minutes: 15  # Adjust the value as needed
 
       # Homebrew for OpenSSL for OPENSSL_STATIC=yes with cargo (rust)
       - name: Set up Homebrew
