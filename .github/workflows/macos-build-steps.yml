@@ -152,12 +152,17 @@ jobs:
           name: ${{ env.PKG_NAME_INTEL }}
           path: ./macos/release/intel64/${{ env.PKG_NAME_INTEL }}
 
+      - name: Setup a README named for arm64 and intel64 artifact
+        run: |
+          echo "Setup a README named for arm64 and intel64 artifact"
+          cp ./macos/build/README.txt ./macos/build/MacOS-PKG-README-arm64-and-intel64.txt
+
       - name: Upload README for arm64 and intel64 artifact
         if: env.PKG_NAME_ARM != '' # only upload once
         uses: actions/upload-artifact@v4
         with:
           name: MacOS-PKG-README-arm64-and-intel64.txt
-          path: ./macos/build/README.txt
+          path: ./macos/build/MacOS-PKG-README-arm64-and-intel64.txt
 
       # build electronite installs
       - name: Run makeAllInstallsElectronite.sh
