@@ -9,7 +9,7 @@ on:
 
 jobs:
   build-for-macos:
-    runs-on: [macos-13, macos-14]  # compile on Intel64 and the Arm64
+    runs-on: [macos-13, macos-15]  # compile on Intel64 and the Arm64
     steps:
 
       # Rust
