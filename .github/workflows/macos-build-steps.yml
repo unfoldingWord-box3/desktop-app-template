@@ -8,6 +8,11 @@ on:
         description: 'The GitHub runner to use (e.g., macos-13, macos-14)'
         required: true
         type: string
+      delay_seconds:
+        description: 'Number of seconds to delay before starting the build'
+        required: false
+        type: number
+        default: 30
       working-directory:
         description: 'Root directory for the build process'
         required: false
@@ -33,6 +38,9 @@ jobs:
       pkg-name-intel: ${{ steps.get-installer-names.outputs.pkg-name-intel }}
     
     steps:
+      - name: Add delay before build
+        run: sleep ${{ inputs.delay_seconds }}
+
       # Rust
       - name: Set up Rust
         id: set-up-rust
