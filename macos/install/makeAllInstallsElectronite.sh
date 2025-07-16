@@ -64,10 +64,10 @@ for ARCH in "intel64" "arm64"; do
     echo "Building for architecture: $ARCH"
   
     downloadElectronUrl="$ElectronIntel64"
-    expectedLiminalZip="*.zip"
+    expectedLiminalZip="*-intel64-*.zip"
     if [ "$ARCH" = "arm64" ]; then
         downloadElectronUrl="$ElectronArm64"
-        expectedLiminalZip="*.zip"
+        expectedLiminalZip="*-arm64-*.zip"
     fi
 
     ./getElectronRelease.sh  $downloadElectronUrl $ARCH
