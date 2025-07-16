@@ -174,11 +174,11 @@ jobs:
         run: |
           echo "Arm64 install:"
           # check if built
-          if [ -n "$(ls ./releases/macos/*-installer-standalone-arm64*.pkg 2>/dev/null)" ]; then
+          if [ -n "$(ls ./releases/macos/*-standalone-arm64*.pkg 2>/dev/null)" ]; then
             cd ./releases/macos
             echo "Found arm64 release:"
             ls -als *.pkg
-            PKG_NAME_ARM=$(ls *-installer-standalone-arm64*.pkg | head -n 1)
+            PKG_NAME_ARM=$(ls *-standalone-arm64*.pkg | head -n 1)
             echo "PKG_NAME_ARM=$PKG_NAME_ARM" >> $GITHUB_ENV
             cd ../..
           else
@@ -187,11 +187,11 @@ jobs:
           
           echo "Intel64 install:"
           # check if built
-          if [ -n "$(ls ./releases/macos/*-installer-standalone-intel64*.pkg 2>/dev/null)" ]; then
+          if [ -n "$(ls ./releases/macos/*-standalone-intel64*.pkg 2>/dev/null)" ]; then
             cd ./releases/macos
             echo "Found intel64 release:"
             ls -als *.pkg
-            PKG_NAME_INTEL=$(ls *-installer-standalone-intel64*.pkg | head -n 1)
+            PKG_NAME_INTEL=$(ls *-standalone-intel64*.pkg | head -n 1)
             echo "PKG_NAME_INTEL=$PKG_NAME_INTEL" >> $GITHUB_ENV
             cd ../..
           else
