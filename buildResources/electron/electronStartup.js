@@ -88,8 +88,14 @@ function createWindow () {
   {
     console.log('createWindow() - after delay');
     const win = new BrowserWindow({
-      width: 800,
-      height: 600
+      width: 1024,
+      height: 768,
+      show: false  // Don't show until ready to maximize
+    });
+
+    win.once('ready-to-show', () => {
+      win.maximize();
+      win.show();
     });
 
     win.loadURL(`http://127.0.0.1:${port}`);
