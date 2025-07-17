@@ -41,17 +41,6 @@ Write-Host "Processing '$zipPath
 # Set destination path
 $destination = Join-Path $destinationFolder $arch
 
-# Source the version script and execute it
-$scriptPath = Join-Path $PSScriptRoot "getVersion.ps1"
-if (Test-Path $scriptPath) {
-    . $scriptPath -filename $zipPath
-
-}
-else {
-    Write-Host "Error: getVersion.ps1 script not found"
-    exit 1
-}
-
 # Check if a version was extracted
 if ([string]::IsNullOrEmpty($env:APP_VERSION)) {
     Write-Host "Error: Unable to extract version from file name '$zipPath
@@ -68,6 +57,9 @@ Write-Host "Created temporary directory: $TEMP_DIR"
 try {
     Expand-Archive -Path $zipPath -DestinationPath $TEMP_DIR -Force
     Write-Host "Successfully unzipped to: $TEMP_DIR"
+    Write-Host "Contents of $TEMP_DIR"
+    Get-ChildItem -Path $TEMP_DIR -Recurse | ForEach-Object { Write-Host $_.FullName }
+    
 }
 catch {
     Write-Host "Error: Failed to unzip '$zipPath

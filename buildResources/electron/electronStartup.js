@@ -36,6 +36,7 @@ function startServer() {
     const serverPath = process.platform === 'win32' ? WIN_SERVER_PATH : MAC_SERVER_PATH;
     const resourcesDir = './lib/';
     const workingDir =  path.join(__dirname, '..');
+    console.log('startServer() - workingDir is ' + workingDir);
 
     console.log('startServer() - resourcesDir is ' + resourcesDir);
     const env = {
@@ -53,7 +54,7 @@ function startServer() {
       cwd: workingDir
     });
     serverProcess.unref();
-    console.log('startServer() - Server started.');
+    console.log('startServer() - Server started at ' + path.join(workingDir, serverPath));
   } else {
     console.log(startServer() - 'Server already running.');
   }
