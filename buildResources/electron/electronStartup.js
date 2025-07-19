@@ -3,7 +3,7 @@ const { spawn, execSync } = require('child_process');
 const path = require('path');
 
 let serverProcess = null;
-app.name = 'Liminal';
+app.name = '${APP_NAME}';
 const port = '19119';
 
 // Function to check if server is running (on port)
@@ -101,7 +101,7 @@ app.whenReady().then(() => {
   if (isMac) {
     const template = [
       {
-        label: 'Liminal', // <--- This name will show in the macOS app menu
+        label: app.name, // <--- This name will show in the macOS app menu
         submenu: [
           {role: 'about'},
           {type: 'separator'},
