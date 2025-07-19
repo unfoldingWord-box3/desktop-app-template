@@ -146,3 +146,4 @@ dist
 .yarn/install-state.gz
 .pnp.*
 /macos/temp/
+/windows/temp/

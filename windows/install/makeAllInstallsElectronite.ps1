@@ -16,6 +16,23 @@
     - makeInstallFromZip.ps1F
 #>
 
+# get environment variables from app_config.env
+get-content ..\..\app_config.env | foreach {
+  $name, $value = $_.split('=')
+  if ([string]::IsNullOrWhiteSpace($name) -or $name.Contains('#')) {
+    # skip empty or comment line in ENV file
+    return
+  }
+  Set-Variable -Name $name -Value $value
+  # Write-Host "Env $name=$value"
+}
+
+$env:APP_NAME=$APP_NAME.Trim("'")
+$env:APP_VERSION=$APP_VERSION
+
+# show environment variables defined
+env
+
 # Define URLs for different architectures
 $ElectronArm64 = "https://github.com/unfoldingWord/electronite/releases/download/v37.1.0-graphite/electronite-v37.1.0-graphite-win32-arm64.zip"
 $ElectronIntel64 = "https://github.com/unfoldingWord/electronite/releases/download/v37.1.0-graphite/electronite-v37.1.0-graphite-win32-x64.zip"
