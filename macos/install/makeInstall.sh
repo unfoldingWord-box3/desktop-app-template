@@ -29,7 +29,7 @@ export FILE_APP_NAME="$FILE_APP_NAME"
 arch="$1"
 
 # There shouldn't be a need to rm the file from the gh actions runner as it is new every time...
-rm -f ../../releases/macos/${FILE_APP_NAME}-installer-*.pkg
+rm -f ../../releases/macos/${FILE_APP_NAME}-installer-macos-${arch}-*.pkg
 
 cd ../build || exit 1
 
@@ -42,22 +42,22 @@ set -x
 # There shouldn't be a need to rm the folder from the gh actions runner as it is new every time
 rm -rf ../project
 
-mkdir -p ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS
+mkdir -p ../project/payload/"$APP_NAME".app/Contents/MacOS
 
 # convert shell script to app
 #rm -f ../build/appLauncher.sh.x.c
-#shc -f ../build/appLauncher.sh -o ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}
-#chmod 555 ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}
+#shc -f ../build/appLauncher.sh -o ../project/payload/"$APP_NAME".app/Contents/MacOS/start-${FILE_APP_NAME}
+#chmod 555 ../project/payload/"$APP_NAME".app/Contents/MacOS/start-${FILE_APP_NAME}
 
 # ../build contains the processed appLauncher.sh and README.txt, which both have variables replaced by `node build.js`
-cp ../build/appLauncher.sh ../project/payload/${FILE_APP_NAME}.app/Contents/MacOS/start-${FILE_APP_NAME}.sh
+cp ../build/appLauncher.sh ../project/payload/"$APP_NAME".app/Contents/MacOS/start-${FILE_APP_NAME}.sh
 
-mkdir -p ../project/payload/${FILE_APP_NAME}.app/Contents/Resources
-cp ../build/README.txt ../project/payload/${FILE_APP_NAME}.app/Contents/Resources/README.txt
+mkdir -p ../project/payload/"$APP_NAME".app/Contents/Resources
+cp ../build/README.txt ../project/payload/"$APP_NAME".app/Contents/Resources/README.txt
 
 # add APP_VERSION, APP_NAME and FILE_APP_NAME to Info.plist. It is correctly in ../buildResources as it is not processed by `node build.js`.
-cp ../buildResources/Info.plist ../project/payload/${FILE_APP_NAME}.app/Contents/
-PLIST_FILE="../project/payload/${FILE_APP_NAME}.app/Contents/Info.plist"
+cp ../buildResources/Info.plist ../project/payload/"$APP_NAME".app/Contents/
+PLIST_FILE="../project/payload/"$APP_NAME".app/Contents/Info.plist"
 
 # Check if the file exists
 if [ ! -f "$PLIST_FILE" ]; then
@@ -65,7 +65,7 @@ if [ ! -f "$PLIST_FILE" ]; then
     exit 1
 fi
 
-# Replace all occurrences of ${APP_VERSION} and ${FILE_APP_NAME} with the value of their variables
+# Replace all occurrences of ${APP_NAME}, ${APP_VERSION} and ${FILE_APP_NAME} with the value of their variables
 sed -i.bak "s/\${APP_VERSION}/$APP_VERSION/g" "$PLIST_FILE"
 sed -i.bak "s/\${APP_NAME}/$APP_NAME/g" "$PLIST_FILE"
 sed -i.bak "s/\${FILE_APP_NAME}/$FILE_APP_NAME/g" "$PLIST_FILE"
@@ -78,31 +78,27 @@ echo "Replaced \${FILE_APP_NAME} with \"$FILE_APP_NAME\" in $PLIST_FILE."
 #remove backup
 rm "$PLIST_FILE.bak"
 
-cp -R ./bin ../project/payload/${FILE_APP_NAME}.app/Contents/
-chmod 755 ../project/payload/${FILE_APP_NAME}.app/Contents/bin/server.bin
+echo "New  plist file:"
+type $PLIST_FILE
 
-cp -R ./lib ../project/payload/${FILE_APP_NAME}.app/Contents/
+cp -R ./bin ../project/payload/"$APP_NAME".app/Contents/
+chmod 755 ../project/payload/"$APP_NAME".app/Contents/bin/server.bin
+
+cp -R ./lib ../project/payload/"$APP_NAME".app/Contents/
 
 mkdir -p ../project/scripts
 cp ../build/post_install_script.sh ../project/scripts/postinstall
 chmod +x ../project/scripts/postinstall
-
-# maintain a one-off identifier for simpler upgrades of early test releases
-if [ "$FILE_APP_NAME" == "liminal" ]; then
-  IDENTIFIER="com.yourdomain.liminal"
-else
-  IDENTIFIER="pankosmia.${FILE_APP_NAME}"
-fi
 
 # build pkg
 cd ..
 pkgbuild \
   --root ./project/payload \
   --scripts ./project/scripts \
-  --identifier ${IDENTIFIER} \
+  --identifier "$APP_NAME" \
   --version "$APP_VERSION" \
   --install-location /Applications \
-  ./build/${FILE_APP_NAME}-installer-${arch}-${APP_VERSION}.pkg
+  ./build/${FILE_APP_NAME}-installer-macos-${arch}-${APP_VERSION}.pkg
 
 # copy to releases folder
-cp ./build/${FILE_APP_NAME}-installer-${arch}-${APP_VERSION}.pkg ../releases/macos/
+cp ./build/${FILE_APP_NAME}-installer-macos-${arch}-${APP_VERSION}.pkg ../releases/macos/
