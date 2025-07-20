@@ -108,6 +108,7 @@ try {
         
         # Replace all occurrences of ${APP_NAME} in startup script
         (Get-Content $electronDestPath\electronStartup.js).Replace('${APP_NAME}', $env:APP_NAME) | Set-Content $electronDestPath\electronStartup.js
+        (Get-Content "$electronDestPath\package.json").Replace('${APP_NAME}', $env:APP_NAME).Replace('${APP_VERSION}', $env:APP_VERSION) | Set-Content "$electronDestPath\package.json"
         
         # Copy architecture-specific files
         $archElectronPath = Join-Path $PSScriptRoot "..\temp\electron.$arch"

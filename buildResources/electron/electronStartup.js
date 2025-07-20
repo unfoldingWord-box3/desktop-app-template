@@ -1,3 +1,27 @@
+/**
+ * @fileoverview Electron startup script for managing application lifecycle, server process, and window creation.
+ *
+ * @synopsis
+ * This script serves as the main entry point for an Electron application, handling:
+ * - Application window management
+ * - Backend server process lifecycle
+ * - Custom menu creation (especially for macOS)
+ * - Application events and shutdown procedures
+ *
+ * @description
+ * The script manages the lifecycle of both the Electron frontend and a backend server process.
+ * It creates the main application window, starts/stops a backend server on port 19119,
+ * and handles various application events like window creation, activation, and shutdown.
+ * For macOS, it creates a custom application menu with standard operations.
+ *
+ * @requirements
+ * - Electron.js
+ * - A compatible backend server binary (server.bin for macOS/Linux or server.exe for Windows)
+ * - Port 19119 must be available for the backend server
+ * - For macOS/Linux: lsof command must be available for port checking
+ * - Environment variable APP_NAME must be set for proper application naming
+ */
+
 const { app, BrowserWindow, Menu, shell} = require('electron');
 const { spawn, execSync } = require('child_process');
 const path = require('path');

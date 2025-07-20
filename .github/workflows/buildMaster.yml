@@ -3,6 +3,10 @@ name: Master Build
 
 on:
   workflow_dispatch:
+  push:
+    branches: ["**"]     # Run on push to any branch
+  pull_request:
+    branches: ["**"]     # Run on PR to any branch
     
 jobs:
   build-macos-intel:
