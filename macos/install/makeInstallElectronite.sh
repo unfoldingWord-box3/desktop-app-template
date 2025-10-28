@@ -116,8 +116,8 @@ CURRENT_DIR=$(pwd)
 echo "Installing Dependencies"
 cd ${APP_BASE_DIR}/Contents/electron
 pwd
-ls -als .
 npm install
+ls -als .
 cd "$CURRENT_DIR"
 pwd
 ls -als .

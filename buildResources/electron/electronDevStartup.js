@@ -29,6 +29,92 @@ const path = require('path');
 app.name = '${APP_NAME}';
 const port = '19119';
 let canClose = true;
+const isMac = process.platform === 'darwin';
+
+const template = [
+  {
+    label: 'Editing',
+    submenu: [
+      {role: 'undo'},
+      {role: 'redo'},
+      {type: 'separator'},
+      {role: 'cut'},
+      {role: 'copy'},
+      {role: 'paste'},
+      {role: 'pasteAndMatchStyle'},
+      {role: 'delete'},
+      {role: 'selectAll'}
+    ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      {role: 'reload'},
+      {role: 'forcereload'},
+      {role: 'toggledevtools'},
+      {type: 'separator'},
+      {role: 'resetzoom'},
+      {role: 'zoomin'},
+      {role: 'zoomout'},
+      {type: 'separator'},
+      {role: 'togglefullscreen'}
+    ]
+  },
+  {
+    label: 'Window',
+    submenu: [
+      {role: 'minimize'},
+      {role: 'zoom'},
+      {type: 'separator'},
+      {role: 'front'},
+      {role: 'window'}
+    ]
+  },
+  {
+    label: isMac ? 'Mac' : 'Not Mac',
+    submenu: [
+      {role: 'other'}
+    ]
+  }
+];
+
+if (isMac) {
+  template.unshift({
+    label: app.name, // <--- This name will show in the macOS app menu
+      submenu: [
+        {role: 'hide'},
+        {role: 'hideothers'},
+        {role: 'unhide'},
+        {type: 'separator'},
+        {role: 'quit'}
+      ]
+  });
+}
+
+// Removed from the first menu section above for now:
+/**
+ {role: 'about'},
+ {type: 'separator'},
+ {role: 'services'},
+ {type: 'separator'},
+ */
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
+
+console.log('Menu', Menu);
+console.log('template', template);
+console.log('process.platform', process.platform);
+
+// Function to check if server is running (on port)
+function isServerRunning() {
+  try {
+    // macOS & Linux: use lsof; Windows would require a different approach
+    execSync(`lsof -i:${port} | grep LISTEN`, { stdio: 'ignore' });
+    return true;
+  } catch {
+    return false;
+  }
+}
 
 /**
  * wraps timer in a Promise to make an async function that continues after a specific number of milliseconds.
@@ -109,70 +195,9 @@ function createWindow() {
 app.whenReady().then(() => {
   // Set a custom menu with desired app name
   ipcMain.on('setCanClose', handleSetCanClose);
-  const isMac = process.platform === 'darwin';
-  if (isMac) {
-    const template = [
-      {
-        label: app.name, // <--- This name will show in the macOS app menu
-        submenu: [
-          {role: 'hide'},
-          {role: 'hideothers'},
-          {role: 'unhide'},
-          {type: 'separator'},
-          {role: 'quit'}
-        ]
-      },
-      {
-        label: 'Edit',
-        submenu: [
-          {role: 'undo'},
-          {role: 'redo'},
-          {type: 'separator'},
-          {role: 'cut'},
-          {role: 'copy'},
-          {role: 'paste'},
-          {role: 'pasteAndMatchStyle'},
-          {role: 'delete'},
-          {role: 'selectAll'}
-        ]
-      },
-      {
-        label: 'View',
-        submenu: [
-          {role: 'reload'},
-          {role: 'forcereload'},
-          {role: 'toggledevtools'},
-          {type: 'separator'},
-          {role: 'resetzoom'},
-          {role: 'zoomin'},
-          {role: 'zoomout'},
-          {type: 'separator'},
-          {role: 'togglefullscreen'}
-        ]
-      },
-      {
-        label: 'Window',
-        submenu: [
-          {role: 'minimize'},
-          {role: 'zoom'},
-          {type: 'separator'},
-          {role: 'front'},
-          {role: 'window'}
-        ]
-      }
-    ];
-    // Removed from the first menu section above for now:
-      /**
-            {role: 'about'},
-            {type: 'separator'},
-            {role: 'services'},
-            {type: 'separator'},
-      */
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
-  }
-
-  setTimeout(createWindow, 0); // Wait 0 seconds for server to start (dev viewer)
+  
+  startServer();
+  setTimeout(createWindow, 2000); // Wait 2 seconds for server to start (adjust as needed)
 });
 
 app.on('window-all-closed', () => {
@@ -180,6 +205,16 @@ app.on('window-all-closed', () => {
   // On macOS, apps are expected to stay alive until explicitly quit
   // but we quit anyway so server doesn't remain running
   app.quit();
+});
+
+app.on('will-quit', () => {
+  console.log('will-quit() - app quitting');
+  stopServer();
+});
+
+app.on('before-quit', () => {
+  console.log('before-quit() - app quitting');
+  stopServer();
 });
 
 app.on('activate', () => {
