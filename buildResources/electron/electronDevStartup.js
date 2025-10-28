@@ -1,6 +1,8 @@
 /**
  * @fileoverview Electron startup script for managing application lifecycle and window creation. (This is the dev viewer version; Server start and stop is handled separately.)
- *
+ * 
+ * DEV
+ * 
  * @synopsis
  * This script serves as the main entry point for the dev version the Electronite viewer, handling:
  * - Application window management
@@ -20,7 +22,7 @@
  * - Environment variable APP_NAME must be set for proper application naming
  */
 
-const { app, BrowserWindow, Menu, shell, ipcMain, ipcRenderer, contextBridge, dialog } = require('electron');
+const { app, BrowserWindow, Menu, shell, ipcMain, ipcRenderer, contextBridge, dialog } = require('electronite');
 const { spawn, execSync } = require('child_process');
 const path = require('path');
 

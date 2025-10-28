@@ -99,6 +99,7 @@ if [[ $devRun =~ ^(-d) ]]; then
   rm ${APP_BASE_DIR}/Contents/electron/electronStartup.js
   cp ${APP_BASE_DIR}/Contents/electron/electronDevStartup.js ${APP_BASE_DIR}/Contents/electron/electronStartup.js
   rm ${APP_BASE_DIR}/Contents/electron/electronDevStartup.js
+  echo "Using developer startup"
 else
   rm ${APP_BASE_DIR}/Contents/electron/electronDevStartup.js
 fi
@@ -110,6 +111,16 @@ sed -i.bak "s/\${APP_VERSION}/$APP_VERSION/g" "${APP_BASE_DIR}/Contents/electron
 
 # now copy architecture specific electron files
 cp -R ../$pkgDir/electron.$arch/* ${APP_BASE_DIR}/Contents/electron
+
+CURRENT_DIR=$(pwd)
+echo "Installing Dependencies"
+cd ${APP_BASE_DIR}/Contents/electron
+pwd
+ls -als .
+npm install
+cd "$CURRENT_DIR"
+pwd
+ls -als .
 
 # Check if Electron executable owner is current user
 ELECTRON_OWNER=$(stat -f %u ${APP_BASE_DIR}/Contents/electron/Electron.app/Contents/MacOS/Electron)

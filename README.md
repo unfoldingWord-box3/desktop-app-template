@@ -36,8 +36,8 @@ npm install
    - This script is intended for setting all clients up for <b>first use</b>, or for rebuilding <b>all</b> clients to their <b>latest main</b> branch. It changes to the main<sup id="a2">[[2]](#f2)</sup> branch, pulls the latest, and builds (or rebuilds) every client every time it is run.<br />
    - Build client manually when you want to use a branch or when you only need to rebuild one client or when you do not want all clients built from their latest main branch!
 10. Run<sup id="a1">[[1]](#f1)</sup> the `build_server` script to build the Pankosmia server and assemble the build environment. (be patient. This will also take a while.)
-11. Run<sup id="a1">[[1]](#f1)</sup> the `build_viewer` script to create an Electronite viewer for use with the local dev build environment.
-12.  Plan at some point to customize this readme for your project.  At minimum:
+11. Run<sup id="a1">[[1]](#f1)</sup> the `build_viewer` script to create an Electronite viewer for use with the local dev build environment.  The output will be in `[os]/viewer/project/payload`
+12. Plan at some point to customize this readme for your project.  At minimum:
     - rewrite the top most "# desktop-app-template" section
     - replace all instances of "[your-desktop-app-repo-name]" with your desktop app repo name"
     - delete 2. and 12., and re-number.
@@ -50,7 +50,7 @@ npm install
    - Only one instance of the server can be running at a time.<sup id="a3">[[3]](#f3)</sup>
  - Client development:
    - Manually build the client(s) changed, stop the server it is is running, then start the server (`run`).  The `run` script will re-assemble the environment to include your build.
-   - Run the `viewer` script to use the Electronite viewer with the local dev build environment.
+   - Run the `viewer` script to use the Electronite viewer with the local dev build environment.   The output will be in `[os]/viewer/project/payload` 
  - To generate a release package for the OS you are using, edit the version number for the release in `app_config.env` then run<sup id="a1">[[1]](#f1)</sup> the `bundle_...` script.
  - To generate artifacts:
    1. [Manually run the desired workflow](https://docs.github.com/en/actions/how-tos/managing-workflow-runs-and-deployments/managing-workflow-runs/manually-running-a-workflow#running-a-workflow) (Actions > [select workflow] > Run workflow).

@@ -22,7 +22,7 @@
  * - Environment variable APP_NAME must be set for proper application naming
  */
 
-const { app, BrowserWindow, Menu, shell, ipcMain, ipcRenderer, contextBridge, dialog } = require('electron');
+const { app, BrowserWindow, Menu, shell, ipcMain, ipcRenderer, contextBridge, dialog } = require('electronite');
 const { spawn, execSync } = require('child_process');
 const path = require('path');
 
@@ -30,6 +30,81 @@ let serverProcess = null;
 app.name = '${APP_NAME}';
 const port = '19119';
 let canClose = true;
+const isMac = process.platform === 'darwin';
+
+const template = [
+  {
+    label: 'Editing',
+    submenu: [
+      {role: 'undo'},
+      {role: 'redo'},
+      {type: 'separator'},
+      {role: 'cut'},
+      {role: 'copy'},
+      {role: 'paste'},
+      {role: 'pasteAndMatchStyle'},
+      {role: 'delete'},
+      {role: 'selectAll'}
+    ]
+  },
+  {
+    label: 'View',
+    submenu: [
+      {role: 'reload'},
+      {role: 'forcereload'},
+      {role: 'toggledevtools'},
+      {type: 'separator'},
+      {role: 'resetzoom'},
+      {role: 'zoomin'},
+      {role: 'zoomout'},
+      {type: 'separator'},
+      {role: 'togglefullscreen'}
+    ]
+  },
+  {
+    label: 'Window',
+    submenu: [
+      {role: 'minimize'},
+      {role: 'zoom'},
+      {type: 'separator'},
+      {role: 'front'},
+      {role: 'window'}
+    ]
+  },
+  {
+    label: isMac ? 'Mac' : 'Not Mac',
+    submenu: [
+      {role: 'other'}
+    ]
+  }
+];
+
+if (isMac) {
+  template.unshift({
+    label: app.name, // <--- This name will show in the macOS app menu
+      submenu: [
+        {role: 'hide'},
+        {role: 'hideothers'},
+        {role: 'unhide'},
+        {type: 'separator'},
+        {role: 'quit'}
+      ]
+  });
+}
+
+// Removed from the first menu section above for now:
+/**
+ {role: 'about'},
+ {type: 'separator'},
+ {role: 'services'},
+ {type: 'separator'},
+ */
+const menu = Menu.buildFromTemplate(template);
+Menu.setApplicationMenu(menu);
+
+console.log('Menu', Menu);
+console.log('template', template);
+console.log('process.platform', process.platform);
 
 // Function to check if server is running (on port)
 function isServerRunning() {
@@ -176,68 +251,6 @@ function createWindow() {
 app.whenReady().then(() => {
   // Set a custom menu with desired app name
   ipcMain.on('setCanClose', handleSetCanClose);
-  const isMac = process.platform === 'darwin';
-  if (isMac) {
-    const template = [
-      {
-        label: app.name, // <--- This name will show in the macOS app menu
-        submenu: [
-          {role: 'hide'},
-          {role: 'hideothers'},
-          {role: 'unhide'},
-          {type: 'separator'},
-          {role: 'quit'}
-        ]
-      },
-      {
-        label: 'Edit',
-        submenu: [
-          {role: 'undo'},
-          {role: 'redo'},
-          {type: 'separator'},
-          {role: 'cut'},
-          {role: 'copy'},
-          {role: 'paste'},
-          {role: 'pasteAndMatchStyle'},
-          {role: 'delete'},
-          {role: 'selectAll'}
-        ]
-      },
-      {
-        label: 'View',
-        submenu: [
-          {role: 'reload'},
-          {role: 'forcereload'},
-          {role: 'toggledevtools'},
-          {type: 'separator'},
-          {role: 'resetzoom'},
-          {role: 'zoomin'},
-          {role: 'zoomout'},
-          {type: 'separator'},
-          {role: 'togglefullscreen'}
-        ]
-      },
-      {
-        label: 'Window',
-        submenu: [
-          {role: 'minimize'},
-          {role: 'zoom'},
-          {type: 'separator'},
-          {role: 'front'},
-          {role: 'window'}
-        ]
-      }
-    ];
-    // Removed from the first menu section above for now:
-      /**
-            {role: 'about'},
-            {type: 'separator'},
-            {role: 'services'},
-            {type: 'separator'},
-      */
-    const menu = Menu.buildFromTemplate(template);
-    Menu.setApplicationMenu(menu);
-  }
   
   startServer();
   setTimeout(createWindow, 2000); // Wait 2 seconds for server to start (adjust as needed)
